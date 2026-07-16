@@ -78,8 +78,8 @@
             inset: 0;
             z-index: 0;
             background:
-                radial-gradient(130% 85% at 50% 36%, rgba(20, 70, 66, 0.35) 0%, rgba(6, 14, 18, 0.6) 45%, #020406 78%),
-                radial-gradient(55% 45% at 50% 38%, rgba(47, 240, 200, 0.06) 0%, rgba(0,0,0,0) 60%);
+                radial-gradient(120% 80% at 50% 34%, rgba(20, 70, 66, 0.28) 0%, rgba(6, 14, 18, 0.6) 45%, #020406 78%),
+                radial-gradient(46% 38% at 50% 34%, rgba(47, 240, 200, 0.05) 0%, rgba(0,0,0,0) 60%);
         }
 
         /* Subtle starfield */
@@ -96,7 +96,7 @@
             position: fixed;
             left: 0;
             right: 0;
-            top: 38%;
+            top: 34%;
             height: 2px;
             transform: translateY(-50%);
             z-index: 1;
@@ -122,9 +122,9 @@
         /* Static CSS orb — only revealed when WebGL can't run */
         #orb-fallback {
             position: fixed;
-            top: 38%;
+            top: 34%;
             left: 50%;
-            width: min(70vw, 46vh);
+            width: min(48vw, 34vh);
             aspect-ratio: 1;
             transform: translate(-50%, -50%);
             z-index: 2;
@@ -300,21 +300,21 @@
         // Tuned from the "Magical AI Orb" preset system to match the brand.
         // ---------------------------------------------------------------------
         const params = {
-            primaryEnergy: '#2ff0c8',   // bright teal core (brand color)
-            secondaryEnergy: '#4f46e5', // indigo wisps at the edges
+            primaryEnergy: '#39d6b8',   // softer teal core (brand color, toned down)
+            secondaryEnergy: '#4a44c8', // muted indigo wisps at the edges
             speed: 0.5,
-            density: 2.3,
-            atmosphereGlow: 0.42,
+            density: 1.45,              // lower = calmer, less vibrant interior
+            atmosphereGlow: 0.24,       // gentler halo
             atmosphereLevel: 1.0,
-            atmosphereScale: 1.045,
-            orbRotation: 0.32,
-            internalAnim: 0.4,
+            atmosphereScale: 1.04,
+            orbRotation: 0.3,
+            internalAnim: 0.38,
             fractalIters: 4,
             fractalScale: 0.97,
             fractalDecay: -16.7,
             smoothness: 0.031,
             asymmetry: 0.55,
-            chromaticAberration: 0.02
+            chromaticAberration: 0.014
         };
 
         // Graceful degradation: if the browser can't give us a WebGL context,
@@ -346,13 +346,20 @@
         const scene = new THREE.Scene(); // transparent — CSS backdrop shows through
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-        // Pulled back so the orb reads as a contained sphere with clear dark
-        // space below it for the wordmark (matching the coming-soon layout).
-        camera.position.set(0, 0, 8.4);
+        // Pulled back so the orb reads as a smaller, contained sphere with plenty
+        // of dark space around it.
+        camera.position.set(0, 0, 11.5);
 
-        // Vertical framing offset: lift the orb above centre. Applied to both the
-        // mesh and the orbit target so drag-to-rotate stays centred on the orb.
-        const ORB_LIFT = 0.95;
+        // Raise the orb into the upper part of the screen (as a fraction of
+        // viewport height) so its bottom edge sits well clear of the wordmark.
+        // Done with a camera view-offset rather than moving the orb, so the orbit
+        // target stays on the orb and drag-to-rotate keeps it spinning in place.
+        const ORB_SHIFT = 0.16;
+        function applyViewOffset() {
+            const w = window.innerWidth, h = window.innerHeight;
+            camera.setViewOffset(w, h, 0, h * ORB_SHIFT, w, h);
+        }
+        applyViewOffset();
 
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -366,7 +373,6 @@
         controls.enableZoom = false;
         controls.minDistance = 4;
         controls.maxDistance = 10;
-        controls.target.set(0, ORB_LIFT, 0);
         controls.update();
 
         const vertexShader = `
@@ -572,7 +578,6 @@
 
         const geometry = new THREE.SphereGeometry(2.0, 128, 128);
         const orb = new THREE.Mesh(geometry, material);
-        orb.position.y = ORB_LIFT;
         scene.add(orb);
 
         const atmosphereMesh = new THREE.Mesh(geometry, atmosphereMaterial);
@@ -622,6 +627,7 @@
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
+            applyViewOffset();
             renderer.setSize(window.innerWidth, window.innerHeight);
             composer.setSize(window.innerWidth, window.innerHeight);
         });
