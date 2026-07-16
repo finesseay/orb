@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>tracelayer — voice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>tracelayer — fractal</title>
     <meta name="description" content="tracelayer — coming soon." />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CradialGradient id='g' cx='38%25' cy='32%25' r='75%25'%3E%3Cstop offset='0%25' stop-color='%237ff6da'/%3E%3Cstop offset='45%25' stop-color='%232fd3b3'/%3E%3Cstop offset='100%25' stop-color='%230b7d70'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='46' fill='url(%23g)'/%3E%3Cpath d='M20 50 H34 L40 34 L48 66 L56 42 L62 54 L68 50 H80' stroke='white' stroke-width='4.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
     <script type="importmap">
@@ -17,17 +17,17 @@
     <link rel="stylesheet" href="./assets/site.css" />
 </head>
 <body>
-    <nav class="nav">
-        <a href="./index.html">Fractal</a>
-        <a href="./v-indigo-teal.html">Indigo→Teal</a>
+    <nav class="nav" aria-label="Orb variations">
+        <a href="./index.html">Voice</a>
         <a href="./v-pulse.html">Pulse</a>
-        <a href="./v-voice.html" class="active">Voice</a>
+        <a href="./v-fractal.html" class="active" aria-current="page">Fractal</a>
+        <a href="./v-indigo-teal.html">Indigo→Teal</a>
     </nav>
 
     <div id="backdrop"></div>
-    <canvas id="stars"></canvas>
+    <canvas id="stars" aria-hidden="true"></canvas>
     <div id="streak"></div>
-    <canvas id="orb-canvas"></canvas>
+    <canvas id="orb-canvas" aria-hidden="true"></canvas>
     <div id="orb-fallback" aria-hidden="true"></div>
 
     <div class="overlay">
@@ -58,7 +58,7 @@
 
     <script type="module">
         import { initOrb } from './assets/orb.js';
-        initOrb({"mode":"voice","primary":"#57d4b8","secondary":"#3f63c4","density":1.7,"orbRotation":0,"twist":false,"chromaticAberration":0.01});
+        initOrb({"mode":"fractal","primary":"#2ec9a6","secondary":"#4a44c8","density":1.5,"orbRotation":0.3,"twist":true,"atmosphereGlow":0.38});
     </script>
 </body>
 </html>

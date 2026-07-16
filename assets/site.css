@@ -49,21 +49,24 @@ html, body {
    echoing the original coming-soon art. */
 #backdrop {
     position: fixed; inset: 0; z-index: 0;
+    /* Ground-lift vignette: near-black at the edges, lifted behind the orb so
+       the sphere has something to sit against and reads brighter. */
     background:
-        radial-gradient(120% 80% at 50% 34%, rgba(20, 70, 66, 0.28) 0%, rgba(6, 14, 18, 0.6) 45%, #020406 78%),
-        radial-gradient(46% 38% at 50% 34%, rgba(47, 240, 200, 0.05) 0%, rgba(0,0,0,0) 60%);
+        radial-gradient(115% 75% at 50% 33%, rgba(24, 90, 82, 0.32) 0%, rgba(8, 20, 22, 0.55) 42%, #05080b 78%),
+        radial-gradient(42% 34% at 50% 33%, rgba(31, 220, 180, 0.07) 0%, rgba(0,0,0,0) 60%);
 }
 
 #stars { position: fixed; inset: 0; z-index: 0; opacity: 0.7; pointer-events: none; }
 
-/* Horizontal energy streak behind the orb */
+/* Faint horizontal bloom behind the orb — kept very subtle so it never
+   competes with the orb or (in voice mode) the waveform. */
 #streak {
-    position: fixed; left: 0; right: 0; top: 34%; height: 2px;
+    position: fixed; left: 0; right: 0; top: 33%; height: 2px;
     transform: translateY(-50%); z-index: 1; pointer-events: none;
     background: linear-gradient(90deg,
-        rgba(47,240,200,0) 0%, rgba(47,240,200,0.12) 35%,
-        rgba(120,200,255,0.35) 50%, rgba(47,240,200,0.12) 65%, rgba(47,240,200,0) 100%);
-    filter: blur(2px);
+        rgba(47,240,200,0) 0%, rgba(47,240,200,0.035) 38%,
+        rgba(90,200,190,0.10) 50%, rgba(47,240,200,0.035) 62%, rgba(47,240,200,0) 100%);
+    filter: blur(3px);
 }
 
 /* The WebGL orb canvas fills the screen, transparent so the backdrop shows through. */
@@ -120,15 +123,17 @@ body.no-webgl .hint { display: none; }
 }
 .brand-icon {
     width: clamp(38px, 5vw, 52px); height: clamp(38px, 5vw, 52px);
-    filter: drop-shadow(0 0 14px rgba(47, 240, 200, 0.55));
+    /* Softer than before so the hero orb, not the logo, owns the brightest glow. */
+    filter: drop-shadow(0 0 10px rgba(47, 240, 200, 0.4));
 }
 .brand-name {
     font-size: clamp(30px, 5.5vw, 52px); font-weight: 500; letter-spacing: 0.5px;
-    color: #f3fbf8; text-shadow: 0 0 24px rgba(47, 240, 200, 0.25);
+    color: #f3fbf8; text-shadow: 0 0 16px rgba(47, 240, 200, 0.14);
 }
+/* Contrast ramp: wordmark ~15:1 (above) · label ~5:1 · hint ~4.5:1 */
 .tagline {
-    margin-top: 22px; font-size: clamp(11px, 1.6vw, 14px); font-weight: 600;
-    letter-spacing: 0.62em; text-indent: 0.62em; color: var(--muted);
+    margin-top: 20px; font-size: clamp(12px, 1.7vw, 15px); font-weight: 600;
+    letter-spacing: 0.6em; text-indent: 0.6em; color: #a7c3bd;
     display: flex; align-items: center; gap: 14px; opacity: 0;
     animation: rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
 }
@@ -155,14 +160,19 @@ body.no-webgl .hint { display: none; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .hint {
-    position: fixed; bottom: 18px; left: 0; right: 0; z-index: 3;
-    text-align: center; font-size: 11px; letter-spacing: 0.18em;
-    color: rgba(200, 224, 219, 0.28); pointer-events: none; text-transform: uppercase;
+    position: fixed; bottom: max(18px, env(safe-area-inset-bottom)); left: 0; right: 0; z-index: 3;
+    text-align: center; font-size: 11px; letter-spacing: 0.2em;
+    color: #8ea39d; pointer-events: none; text-transform: uppercase;
 }
 
 @media (max-width: 600px) {
     .brand { gap: 12px; }
-    .nav a { padding: 7px 11px; font-size: 11px; }
+    .nav {
+        max-width: calc(100vw - 20px);
+        overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav a { padding: 7px 12px; font-size: 11px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

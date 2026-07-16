@@ -29,6 +29,8 @@ const FRAG_HEAD = `
     uniform float uInternalAnim;
     uniform float uSmoothness;
     uniform float uAsymmetry;
+    uniform vec3 uRimColor;
+    uniform float uRimStrength;
     varying vec3 vLocalPosition;
     varying vec3 vNormal;
     varying vec3 vViewPosition;
@@ -77,29 +79,35 @@ const STRUCT = {
         return core * (0.45 + 1.5 * shell + 0.5 * fine) * breathe;
     }`,
 
-    // A horizontal waveform ribbon that wiggles and pulses like a voice.
+    // A horizontal waveform ribbon that wiggles and pulses like a voice, plus
+    // concentric rings that radiate on the loud beats (sound leaving the orb).
     voice: `
     float evaluateStructure(vec3 pos) {
         float t = uTime;
         float x = pos.x;
+        float r = length(pos);
+        // Shared speech-like envelope: irregular peaks with quiet rests, so the
+        // whole orb feels like it is speaking rather than looping a sine.
+        float speech = 0.30 + 0.70 * abs(sin(t * 2.3) * sin(t * 0.9 + 1.0));
+        // Waveform curve along x.
         float w = 0.0;
         w += 0.32 * sin(x * 3.0  + t * 5.0);
         w += 0.16 * sin(x * 6.3  - t * 7.7);
         w += 0.09 * sin(x * 11.0 + t * 10.5);
-        // Speech-like envelope: energy concentrated centrally, pulsing on/off.
-        float speech = 0.35 + 0.65 * abs(sin(t * 2.3) * sin(t * 0.9 + 1.0));
         float env = exp(-x * x * 0.55) * speech;
         w *= env;
-        // Glowing ribbon around the waveform curve (thin in y, soft slab in z).
         float dy = pos.y - w;
         float line = exp(-(dy * dy) / 0.02);
         float zfade = exp(-pos.z * pos.z * 0.6);
         float xin = exp(-x * x * 0.10);
-        float core = smoothstep(2.0, 0.1, length(pos));
+        float core = smoothstep(2.0, 0.1, r);
         float ribbon = line * zfade * xin * core * 1.8;
+        // Radiating rings, brightened by the same envelope so they pulse on peaks.
+        float rings = pow(0.5 + 0.5 * sin(r * 5.0 - t * 3.5), 4.0);
+        float ringGlow = rings * smoothstep(2.0, 0.2, r) * (0.10 + 0.45 * speech) * 0.4;
         // Faint interior fill so the globe still reads as a sphere.
-        float fill = smoothstep(2.0, 0.0, length(pos)) * 0.05;
-        return ribbon + fill;
+        float fill = smoothstep(2.0, 0.0, r) * 0.05;
+        return ribbon + ringGlow + fill;
     }`
 };
 
@@ -149,7 +157,12 @@ function fragTail(twist) {
         float edgeAA = smoothstep(0.0, 0.05, facingRatio);
         vec3 finalColor = 0.5 * log(1.0 + volumeColor);
         finalColor = clamp(finalColor, 0.0, 1.0);
+        // Fresnel rim light: a thin brighter arc near the silhouette that gives
+        // the orb a defined surface instead of dissolving into a soft blob.
+        float rim = pow(1.0 - facingRatio, 3.0) * edgeAA;
+        finalColor += uRimColor * rim * uRimStrength;
         finalColor *= edgeAA;
+        finalColor = clamp(finalColor, 0.0, 1.0);
         float maxLuma = max(finalColor.r, max(finalColor.g, finalColor.b));
         float alpha = clamp(maxLuma * 1.5, 0.0, 1.0) * edgeAA;
         gl_FragColor = vec4(finalColor, alpha);
@@ -176,13 +189,15 @@ export function initOrb(userConfig) {
         primary: '#48bda2',       // core colour (dense regions)
         secondary: '#524dac',     // wisp colour (thin regions)
         speed: 0.5,
-        density: 1.4,
-        atmosphereGlow: 0.24,
+        density: 1.5,
+        atmosphereGlow: 0.4,          // stronger halo so the orb owns the light
         atmosphereLevel: 1.0,
-        atmosphereScale: 1.04,
+        atmosphereScale: 1.05,
         orbRotation: 0.3,
         internalAnim: 0.38,
         chromaticAberration: 0.014,
+        rimColor: '#6cead0',          // Fresnel rim tint (bright teal)
+        rimStrength: 0.35,
         twist: true,
         // fractal-only tuning
         fractalIters: 4, fractalScale: 0.97, fractalDecay: -16.7,
@@ -221,7 +236,7 @@ export function initOrb(userConfig) {
 
     // Raise the orb into the upper portion of the screen (fraction of height)
     // with a camera view-offset, so the orbit target stays on the orb.
-    const ORB_SHIFT = 0.16;
+    const ORB_SHIFT = 0.14;
     function applyViewOffset() {
         camera.setViewOffset(window.innerWidth, window.innerHeight, 0, window.innerHeight * ORB_SHIFT, window.innerWidth, window.innerHeight);
     }
@@ -252,7 +267,9 @@ export function initOrb(userConfig) {
         uFractalDecay: { value: cfg.fractalDecay },
         uInternalAnim: { value: cfg.internalAnim },
         uSmoothness: { value: cfg.smoothness },
-        uAsymmetry: { value: cfg.asymmetry }
+        uAsymmetry: { value: cfg.asymmetry },
+        uRimColor: { value: new THREE.Color(cfg.rimColor) },
+        uRimStrength: { value: cfg.rimStrength }
     };
 
     const material = new THREE.ShaderMaterial({
