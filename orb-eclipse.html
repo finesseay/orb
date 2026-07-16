@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Eclipse orb — glowing corona</title>
+<style>
+  :root{
+    --bg:#050507;
+    --disc-1:#141519;      /* top of the sphere, catching light */
+    --disc-2:#08080b;      /* shaded lower body */
+    --ink:#eceef2;
+    --muted:#8a8f9c;
+
+    --orb: 260px;          /* diameter of the dark disc */
+    --spread: 46px;        /* how far the corona reaches past the rim */
+
+    /* Base corona hue. hue-rotate animates this around the wheel. */
+    --c-hot:  #37e6a0;     /* the bright inner lip of the ring */
+    --c-soft: #1f8f7a;     /* the wider, dimmer bloom */
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:
+      radial-gradient(120% 90% at 50% 38%, #0c0d12 0%, var(--bg) 60%, #000 100%);
+    color:var(--ink);
+    font-family:"Helvetica Neue",Arial,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+  }
+
+  .stage{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:56px;
+    text-align:center;
+    padding:24px;
+  }
+
+  /* ---- the orb ---- */
+  .orb{
+    position:relative;
+    width:var(--orb);
+    height:var(--orb);
+    isolation:isolate;              /* keep screen-blends local */
+  }
+
+  /* Layer 1 — the corona ring. A radial gradient that is empty in the
+     middle, blazes at the rim, then fades to nothing. Blur turns the hard
+     stops into a soft halo. The disc on top hides the centre, leaving a ring. */
+  .corona{
+    position:absolute;
+    inset:calc(-1 * var(--spread));
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 50% 50%,
+        transparent 38%,
+        var(--c-soft) 47%,
+        var(--c-hot) 50%,
+        var(--c-soft) 55%,
+        transparent 70%);
+    filter:blur(26px) saturate(1.35);
+    animation:hue 11s linear infinite, breathe 6s ease-in-out infinite;
+    z-index:1;
+  }
+
+  /* Layer 2 — a single hot spot that revolves, so the ring never looks flat.
+     conic hotspot, blurred, blended additively over the corona. */
+  .corona::after{
+    content:"";
+    position:absolute;
+    inset:8%;
+    border-radius:50%;
+    background:conic-gradient(from 0deg,
+      transparent 0deg,
+      var(--c-hot) 40deg,
+      transparent 120deg,
+      transparent 360deg);
+    filter:blur(30px);
+    mix-blend-mode:screen;
+    animation:spin 7s linear infinite;
+  }
+
+  /* Layer 3 — the dark sphere itself, sitting over the corona centre.
+     A slight off-centre radial gives it volume; the inset shadow deepens
+     the lower edge so it reads as a ball, not a flat hole. */
+  .disc{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:radial-gradient(circle at 50% 34%, var(--disc-1), var(--disc-2) 68%);
+    box-shadow:
+      inset 0 -10px 30px rgba(0,0,0,.85),
+      inset 0 4px 14px rgba(255,255,255,.04);
+    display:grid;
+    place-items:center;
+    z-index:2;
+  }
+
+  /* the mark in the centre — swap for an <img>/<svg> logo */
+  .mark{
+    width:34%;
+    height:34%;
+    color:var(--ink);
+    filter:drop-shadow(0 2px 8px rgba(0,0,0,.6));
+  }
+
+  /* ---- copy ---- */
+  .eyebrow{
+    margin:0 0 14px;
+    font-size:12px;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .wordmark{
+    margin:0;
+    font-size:clamp(30px,7vw,54px);
+    font-weight:600;
+    letter-spacing:-.01em;
+  }
+  .sub{
+    margin:16px auto 0;
+    max-width:34ch;
+    color:var(--muted);
+    line-height:1.6;
+    font-size:15px;
+  }
+
+  @keyframes hue   { to { filter:blur(26px) saturate(1.35) hue-rotate(360deg); } }
+  @keyframes spin  { to { transform:rotate(360deg); } }
+  @keyframes breathe{
+    0%,100%{ transform:scale(1);    opacity:.92 }
+    50%    { transform:scale(1.05); opacity:1 }
+  }
+
+  /* respect users who don't want motion — hold a single, still glow */
+  @media (prefers-reduced-motion:reduce){
+    .corona, .corona::after{ animation:none }
+  }
+</style>
+</head>
+<body>
+  <main class="stage">
+    <div class="orb" role="img" aria-label="Glowing orb">
+      <div class="corona"></div>
+      <div class="disc">
+        <!-- sailboat mark, like the reference video; drop in your own logo here -->
+        <svg class="mark" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+          <path d="M54 8 54 60 20 60z"/>
+          <path d="M18 66 82 66 72 82 28 82z"/>
+        </svg>
+      </div>
+    </div>
+
+    <div>
+      <p class="eyebrow">Coming soon</p>
+      <h1 class="wordmark">tracelayer</h1>
+      <p class="sub">Something bright is taking shape. Leave the lights on.</p>
+    </div>
+  </main>
+</body>
+</html>
