@@ -24,6 +24,12 @@
     font-style: normal; font-weight: 500; font-display: swap;
     src: url('../vendor/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2');
 }
+/* Quicksand retained for the "COMING SOON" label (kept in its original face). */
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal; font-weight: 600; font-display: swap;
+    src: url('../vendor/fonts/quicksand-latin-600-normal.woff2') format('woff2');
+}
 
 :root {
     --bg: #04070a;
@@ -134,9 +140,9 @@ body.no-webgl .hint { display: none; }
 }
 /* Contrast ramp: wordmark ~15:1 (above) · label ~5:1 · hint ~4.5:1 */
 .tagline {
-    margin-top: 20px; font-family: 'IBM Plex Mono', monospace;
-    font-size: clamp(11px, 1.5vw, 13px); font-weight: 500;
-    letter-spacing: 0.34em; text-indent: 0.34em; color: #a7c3bd;
+    margin-top: 20px; font-family: 'Quicksand', system-ui, sans-serif;
+    font-size: clamp(12px, 1.7vw, 15px); font-weight: 600;
+    letter-spacing: 0.6em; text-indent: 0.6em; color: #a7c3bd;
     display: flex; align-items: center; gap: 14px; opacity: 0;
     animation: rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
 }

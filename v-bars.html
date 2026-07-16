@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>tracelayer — fractal</title>
+    <title>tracelayer — bars</title>
     <meta name="description" content="tracelayer — coming soon." />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CradialGradient id='g' cx='38%25' cy='32%25' r='75%25'%3E%3Cstop offset='0%25' stop-color='%237ff6da'/%3E%3Cstop offset='45%25' stop-color='%232fd3b3'/%3E%3Cstop offset='100%25' stop-color='%230b7d70'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='46' fill='url(%23g)'/%3E%3Cpath d='M20 50 H34 L40 34 L48 66 L56 42 L62 54 L68 50 H80' stroke='white' stroke-width='4.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
     <script type="importmap">
@@ -18,10 +18,10 @@
 </head>
 <body>
     <nav class="nav" aria-label="Orb variations">
-        <a href="./index.html">Voice</a>
-        <a href="./v-pulse.html">Pulse</a>
-        <a href="./v-fractal.html" class="active" aria-current="page">Fractal</a>
-        <a href="./v-indigo-teal.html">Indigo→Teal</a>
+        <a href="./index.html">Wave</a>
+        <a href="./v-bars.html" class="active" aria-current="page">Bars</a>
+        <a href="./v-mirror.html">Mirror</a>
+        <a href="./v-ribbon.html">Ribbon</a>
     </nav>
 
     <div id="backdrop"></div>
@@ -53,12 +53,11 @@
         </div>
     </div>
 
-    <div class="hint">drag to explore</div>
     <div id="loader"><div class="ring"></div></div>
 
     <script type="module">
         import { initOrb } from './assets/orb.js';
-        initOrb({"mode":"fractal","primary":"#2ec9a6","secondary":"#4a44c8","density":1.5,"orbRotation":0.3,"twist":true});
+        initOrb({"mode":"bars","primary":"#3fe9c4","secondary":"#12a07a","density":1.8,"orbRotation":0,"twist":false,"chromaticAberration":0.01});
     </script>
 </body>
 </html>

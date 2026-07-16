@@ -113,6 +113,69 @@ const STRUCT = {
                    * (0.5 + 0.5 * sin(pos.z * 1.8 + t * 0.3));
         haze *= smoothstep(2.0, 0.15, r) * 0.13;
         return ribbon + ringGlow + haze;
+    }`,
+
+    // Equalizer: vertical bars rising symmetrically from the centre line.
+    bars: `
+    float evaluateStructure(vec3 pos) {
+        float t = uTime; float x = pos.x; float y = pos.y; float r = length(pos);
+        float speech = 0.30 + 0.70 * abs(sin(t * 2.3) * sin(t * 0.9 + 1.0));
+        float N = 17.0; float slot = 4.0 / N;
+        float idx = floor((x + 2.0) / slot);
+        float bcx = -2.0 + (idx + 0.5) * slot;
+        float within = smoothstep(slot * 0.46, slot * 0.26, abs(x - bcx));
+        float amp = 0.12 + 0.60 * abs(sin(idx * 1.7 + t * 5.0) * sin(idx * 0.7 - t * 2.7));
+        amp *= exp(-bcx * bcx * 0.14) * (0.5 + 0.9 * speech);
+        float col = smoothstep(amp, amp - 0.05, abs(y));
+        float zfade = exp(-pos.z * pos.z * 0.6);
+        float core = smoothstep(2.0, 0.1, r);
+        float bars = within * col * zfade * core * 2.1;
+        float haze = (0.5 + 0.5 * sin(x * 2.0 + t * 0.5)) * (0.5 + 0.5 * sin(y * 2.3 - t * 0.4)) * (0.5 + 0.5 * sin(pos.z * 1.8 + t * 0.3));
+        haze *= smoothstep(2.0, 0.15, r) * 0.10;
+        return bars + haze;
+    }`,
+
+    // Mirror: a symmetric filled waveform band that breathes like a voice.
+    mirror: `
+    float evaluateStructure(vec3 pos) {
+        float t = uTime; float x = pos.x; float y = pos.y; float r = length(pos);
+        float speech = 0.30 + 0.70 * abs(sin(t * 2.3) * sin(t * 0.9 + 1.0));
+        float w = 0.0;
+        w += 0.34 * sin(x * 3.0 + t * 5.0);
+        w += 0.18 * sin(x * 6.3 - t * 7.7);
+        w += 0.10 * sin(x * 11.0 + t * 10.5);
+        float env = exp(-x * x * 0.5) * (0.35 + 0.65 * speech);
+        w = abs(w) * env + 0.015;
+        float band = smoothstep(w, w - 0.05, abs(y));
+        float edge = exp(-(abs(y) - w) * (abs(y) - w) / 0.006); // bright rim on the band
+        float xin = exp(-x * x * 0.10);
+        float zfade = exp(-pos.z * pos.z * 0.6);
+        float core = smoothstep(2.0, 0.1, r);
+        float ribbon = (band * 1.4 + edge * 0.9) * xin * zfade * core;
+        float haze = (0.5 + 0.5 * sin(x * 2.0 + t * 0.5)) * (0.5 + 0.5 * sin(y * 2.3 - t * 0.4)) * (0.5 + 0.5 * sin(pos.z * 1.8 + t * 0.3));
+        haze *= smoothstep(2.0, 0.15, r) * 0.11;
+        return ribbon + haze;
+    }`,
+
+    // Ribbon: three flowing offset waveform strands (Siri-like).
+    ribbon: `
+    float evaluateStructure(vec3 pos) {
+        float t = uTime; float x = pos.x; float y = pos.y; float r = length(pos);
+        float speech = 0.30 + 0.70 * abs(sin(t * 2.3) * sin(t * 0.9 + 1.0));
+        float env = exp(-x * x * 0.5) * (0.35 + 0.65 * speech);
+        float w1 = 0.30 * sin(x * 3.0 + t * 5.0) * env;
+        float w2 = 0.24 * sin(x * 4.4 - t * 6.6 + 1.0) * env;
+        float w3 = 0.18 * sin(x * 6.1 + t * 8.2 + 2.2) * env;
+        float th = 0.010;
+        float l = exp(-(y - w1) * (y - w1) / th)
+                + 0.8 * exp(-(y - w2) * (y - w2) / th)
+                + 0.6 * exp(-(y - w3) * (y - w3) / th);
+        float xin = exp(-x * x * 0.12);
+        float zfade = exp(-pos.z * pos.z * 0.6);
+        float core = smoothstep(2.0, 0.1, r);
+        float haze = (0.5 + 0.5 * sin(x * 2.0 + t * 0.5)) * (0.5 + 0.5 * sin(y * 2.3 - t * 0.4)) * (0.5 + 0.5 * sin(pos.z * 1.8 + t * 0.3));
+        haze *= smoothstep(2.0, 0.15, r) * 0.11;
+        return l * xin * zfade * core * 1.7 + haze;
     }`
 };
 
