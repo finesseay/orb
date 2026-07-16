@@ -1,0 +1,8 @@
+# Local tooling only — three.js/fonts are vendored under ./vendor and ARE committed
+/node_modules/
+/package-lock.json
+/package.json
+# Local dev/preview helpers (root only; docs/ is committed)
+/serve.js
+/shot*.js
+/preview*.png
