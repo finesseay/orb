@@ -16,15 +16,7 @@
     </script>
     <link rel="stylesheet" href="./assets/site.css" />
 </head>
-<body class="font-onest">
-    <nav class="nav" aria-label="Orb variations">
-        <a href="./index.html" class="active" aria-current="page">Ribbon</a>
-        <a href="./v-wave.html">Wave</a>
-        <a href="./v-bars.html">Bars</a>
-        <a href="./v-mirror.html">Mirror</a>
-    </nav>
-    <button class="fonttoggle" id="fonttoggle" type="button" aria-label="Toggle wordmark font">Aa · Onest</button>
-
+<body>
     <div id="backdrop"></div>
     <canvas id="stars" aria-hidden="true"></canvas>
     <div id="streak"></div>
@@ -55,25 +47,6 @@
     </div>
 
     <div id="loader"><div class="ring"></div></div>
-
-    <script>
-        (function () {
-            var btn = document.getElementById('fonttoggle'); if (!btn) return;
-            var KEY = 'tl-font';
-            function apply(f) {
-                document.body.classList.toggle('font-onest', f === 'onest');
-                btn.textContent = 'Aa · ' + (f === 'onest' ? 'Onest' : 'Space Grotesk');
-            }
-            var cur = 'onest';
-            try { cur = localStorage.getItem(KEY) || 'onest'; } catch (e) {}
-            apply(cur);
-            btn.addEventListener('click', function () {
-                cur = (cur === 'onest') ? 'space' : 'onest';
-                try { localStorage.setItem(KEY, cur); } catch (e) {}
-                apply(cur);
-            });
-        })();
-    </script>
 
     <script type="module">
         import { initOrb } from './assets/orb.js';

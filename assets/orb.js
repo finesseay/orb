@@ -157,30 +157,26 @@ const STRUCT = {
         return ribbon + haze;
     }`,
 
-    // Ribbon: a thick glowing voice band — three strands that hug one waveform
-    // (small parallel offsets, additive) so overlaps brighten instead of leaving
-    // dark "eye" holes. Wide speech dynamic range: big peaks, near-flat rests.
+    // Ribbon: three flowing offset waveform strands (Siri-like) — kept calm and
+    // delicate (the preferred, gentler read; not a loud energised band).
     ribbon: `
     float evaluateStructure(vec3 pos) {
         float t = uTime; float x = pos.x; float y = pos.y; float r = length(pos);
-        float pulse = abs(sin(t * 2.3) * sin(t * 0.9 + 1.0));
-        float speech = 0.12 + 0.88 * pow(pulse, 0.8);          // loud peaks, quiet rests
-        float env = exp(-x * x * 0.5) * (0.15 + 0.85 * speech); // tails jitter, never flat
-        float base = (0.42 * sin(x * 3.0 + t * 4.5)
-                    + 0.20 * sin(x * 5.7 - t * 6.5 + 1.0)
-                    + 0.10 * sin(x * 9.0 + t * 9.0 + 2.0)) * env;
-        float th = 0.012;
-        float off = 0.055;
-        float l = exp(-(y - base) * (y - base) / th)
-                + 0.7 * exp(-(y - (base + off)) * (y - (base + off)) / th)
-                + 0.7 * exp(-(y - (base - off)) * (y - (base - off)) / th);
+        float speech = 0.30 + 0.70 * abs(sin(t * 2.3) * sin(t * 0.9 + 1.0));
+        float env = exp(-x * x * 0.5) * (0.35 + 0.65 * speech);
+        float w1 = 0.30 * sin(x * 3.0 + t * 5.0) * env;
+        float w2 = 0.24 * sin(x * 4.4 - t * 6.6 + 1.0) * env;
+        float w3 = 0.18 * sin(x * 6.1 + t * 8.2 + 2.2) * env;
+        float th = 0.010;
+        float l = exp(-(y - w1) * (y - w1) / th)
+                + 0.8 * exp(-(y - w2) * (y - w2) / th)
+                + 0.6 * exp(-(y - w3) * (y - w3) / th);
         float xin = exp(-x * x * 0.12);
         float zfade = exp(-pos.z * pos.z * 0.6);
         float core = smoothstep(2.0, 0.1, r);
-        float glow = 0.85 + 0.5 * speech;                       // beat: brighter on peaks
         float haze = (0.5 + 0.5 * sin(x * 2.0 + t * 0.5)) * (0.5 + 0.5 * sin(y * 2.3 - t * 0.4)) * (0.5 + 0.5 * sin(pos.z * 1.8 + t * 0.3));
         haze *= smoothstep(2.0, 0.15, r) * 0.11;
-        return l * xin * zfade * core * 1.7 * glow + haze;
+        return l * xin * zfade * core * 1.7 + haze;
     }`
 };
 

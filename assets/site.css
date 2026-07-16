@@ -1,30 +1,8 @@
 /* ---------------------------------------------------------------------------
-   tracelayer — shared site styles (used by every orb variation page)
+   tracelayer — coming-soon page styles
    --------------------------------------------------------------------------- */
 
-/* Self-hosted type. Paths are relative to this file (assets/site.css).
-   Wordmark: Space Grotesk (technical geometric). Labels: IBM Plex Mono. */
-@font-face {
-    font-family: 'Space Grotesk';
-    font-style: normal; font-weight: 500; font-display: swap;
-    src: url('../vendor/fonts/space-grotesk-latin-500-normal.woff2') format('woff2');
-}
-@font-face {
-    font-family: 'Space Grotesk';
-    font-style: normal; font-weight: 600; font-display: swap;
-    src: url('../vendor/fonts/space-grotesk-latin-600-normal.woff2') format('woff2');
-}
-@font-face {
-    font-family: 'IBM Plex Mono';
-    font-style: normal; font-weight: 400; font-display: swap;
-    src: url('../vendor/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
-}
-@font-face {
-    font-family: 'IBM Plex Mono';
-    font-style: normal; font-weight: 500; font-display: swap;
-    src: url('../vendor/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2');
-}
-/* Onest — wordmark (600) + the "COMING SOON" label (500), one type system. */
+/* Self-hosted type: Onest — wordmark (600) + "COMING SOON" label (500). */
 @font-face {
     font-family: 'Onest';
     font-style: normal; font-weight: 500; font-display: swap;
@@ -39,10 +17,7 @@
 :root {
     --bg: #04070a;
     --teal: #2ff0c8;
-    --teal-deep: #0d9488;
-    --indigo: #5b6cf0;
     --text: #e8f6f2;
-    --muted: rgba(200, 224, 219, 0.55);
 }
 
 * { box-sizing: border-box; }
@@ -52,16 +27,14 @@ html, body {
     overflow: hidden;
     background-color: var(--bg);
     color: var(--text);
-    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    font-family: 'Onest', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
-/* Deep space backdrop: radial vignette + a faint horizontal light streak
-   echoing the original coming-soon art. */
+/* Deep-space backdrop: ground-lift vignette so the orb has something to sit
+   against and reads brighter, near-black at the edges. */
 #backdrop {
     position: fixed; inset: 0; z-index: 0;
-    /* Ground-lift vignette: near-black at the edges, lifted behind the orb so
-       the sphere has something to sit against and reads brighter. */
     background:
         radial-gradient(115% 78% at 50% 41%, rgba(20, 78, 72, 0.22) 0%, rgba(7, 17, 20, 0.5) 44%, #05080b 78%),
         radial-gradient(40% 32% at 50% 41%, rgba(31, 220, 180, 0.05) 0%, rgba(0,0,0,0) 60%);
@@ -69,8 +42,7 @@ html, body {
 
 #stars { position: fixed; inset: 0; z-index: 0; opacity: 0.7; pointer-events: none; }
 
-/* Faint horizontal bloom behind the orb — kept very subtle so it never
-   competes with the orb or (in voice mode) the waveform. */
+/* Very faint horizontal bloom behind the orb. */
 #streak {
     position: fixed; left: 0; right: 0; top: 41%; height: 2px;
     transform: translateY(-50%); z-index: 1; pointer-events: none;
@@ -80,10 +52,10 @@ html, body {
     filter: blur(3px);
 }
 
-/* The WebGL orb canvas fills the screen, transparent so the backdrop shows through. */
+/* WebGL orb canvas — transparent so the backdrop shows through. */
 #orb-canvas { position: fixed; inset: 0; z-index: 2; display: block; }
 
-/* Static CSS orb — only revealed when WebGL can't run */
+/* Static CSS orb — only revealed when WebGL can't run. */
 #orb-fallback {
     position: fixed; top: 41%; left: 50%;
     width: min(48vw, 34vh); aspect-ratio: 1;
@@ -94,35 +66,12 @@ html, body {
     animation: floaty 6s ease-in-out infinite;
 }
 body.no-webgl #orb-fallback { display: block; }
-body.no-webgl .hint { display: none; }
 @keyframes floaty {
     0%, 100% { transform: translate(-50%, -50%) scale(1); }
     50%      { transform: translate(-50%, -52%) scale(1.02); }
 }
 
-/* --- Version switcher --- */
-.nav {
-    position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
-    z-index: 6; display: flex; gap: 4px; padding: 5px;
-    background: rgba(9, 18, 22, 0.5);
-    border: 1px solid rgba(120, 200, 190, 0.12);
-    border-radius: 999px;
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    pointer-events: auto;
-    opacity: 0; animation: rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-}
-.nav a {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
-    color: rgba(200, 224, 219, 0.6); text-decoration: none;
-    padding: 7px 15px; border-radius: 999px;
-    transition: background 0.2s ease, color 0.2s ease; white-space: nowrap;
-}
-.nav a:hover { color: #eafff9; }
-.nav a.active { background: rgba(47, 240, 200, 0.14); color: #7ff6da; }
-.nav a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
-
-/* --- UI overlay: logo + wordmark + coming soon --- */
+/* --- Overlay: logo + wordmark + coming soon --- */
 .overlay {
     position: fixed; inset: 0; z-index: 3;
     display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
@@ -135,31 +84,13 @@ body.no-webgl .hint { display: none; }
 }
 .brand-icon {
     width: clamp(40px, 5.4vw, 56px); height: clamp(40px, 5.4vw, 56px);
-    /* Softer than before so the hero orb, not the logo, owns the brightest glow. */
     filter: drop-shadow(0 0 10px rgba(47, 240, 200, 0.4));
 }
 .brand-name {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: 'Onest', system-ui, sans-serif;
     font-size: clamp(32px, 5.9vw, 56px); font-weight: 600; letter-spacing: -0.02em;
     color: #dce8e3; text-shadow: 0 0 16px rgba(47, 240, 200, 0.12);
 }
-/* Font toggle: swap the wordmark face to Onest. */
-body.font-onest .brand-name { font-family: 'Onest', system-ui, sans-serif; letter-spacing: -0.02em; }
-
-/* Wordmark font switcher (evaluation control). */
-.fonttoggle {
-    position: fixed; top: 16px; right: 16px; z-index: 6;
-    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.04em;
-    color: rgba(200, 224, 219, 0.6); background: rgba(9, 18, 22, 0.5);
-    border: 1px solid rgba(120, 200, 190, 0.12); border-radius: 999px;
-    padding: 8px 14px; cursor: pointer;
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    transition: color 0.2s ease, background 0.2s ease;
-    opacity: 0; animation: rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
-}
-.fonttoggle:hover { color: #eafff9; }
-.fonttoggle:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
-/* Contrast ramp: wordmark ~15:1 (above) · label ~5:1 · hint ~4.5:1 */
 .tagline {
     margin-top: 22px; font-family: 'Onest', system-ui, sans-serif;
     font-size: clamp(11px, 1.5vw, 13px); font-weight: 500;
@@ -189,26 +120,11 @@ body.font-onest .brand-name { font-family: 'Onest', system-ui, sans-serif; lette
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.hint {
-    position: fixed; bottom: max(18px, env(safe-area-inset-bottom)); left: 0; right: 0; z-index: 3;
-    font-family: 'IBM Plex Mono', monospace;
-    text-align: center; font-size: 11px; letter-spacing: 0.2em;
-    color: #8ea39d; pointer-events: none; text-transform: uppercase;
-}
-
 @media (max-width: 600px) {
     .brand { gap: 12px; }
-    .nav {
-        max-width: calc(100vw - 20px);
-        overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-    }
-    .nav::-webkit-scrollbar { display: none; }
-    .nav a { padding: 7px 12px; font-size: 11px; }
-    /* Move the font toggle out of the nav's way on small screens. */
-    .fonttoggle { top: auto; bottom: 16px; right: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .brand, .tagline, .nav { animation-duration: 0.01ms; opacity: 1; }
+    .brand, .tagline { animation-duration: 0.01ms; opacity: 1; }
     .tagline .dot, #orb-fallback { animation: none; }
 }
