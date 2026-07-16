@@ -6,3 +6,5 @@
 /serve.js
 /shot*.js
 /preview*.png
+# Generated build output (the inlined single-file bundle for the hosted preview)
+/build/
