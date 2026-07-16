@@ -24,13 +24,12 @@
     font-style: normal; font-weight: 500; font-display: swap;
     src: url('../vendor/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2');
 }
-/* Quicksand retained for the "COMING SOON" label (kept in its original face). */
+/* Onest — wordmark (600) + the "COMING SOON" label (500), one type system. */
 @font-face {
-    font-family: 'Quicksand';
-    font-style: normal; font-weight: 600; font-display: swap;
-    src: url('../vendor/fonts/quicksand-latin-600-normal.woff2') format('woff2');
+    font-family: 'Onest';
+    font-style: normal; font-weight: 500; font-display: swap;
+    src: url('../vendor/fonts/onest-latin-500-normal.woff2') format('woff2');
 }
-/* Onest — the alternate wordmark face (toggled against Space Grotesk). */
 @font-face {
     font-family: 'Onest';
     font-style: normal; font-weight: 600; font-display: swap;
@@ -162,10 +161,10 @@ body.font-onest .brand-name { font-family: 'Onest', system-ui, sans-serif; lette
 .fonttoggle:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 /* Contrast ramp: wordmark ~15:1 (above) · label ~5:1 · hint ~4.5:1 */
 .tagline {
-    margin-top: 20px; font-family: 'Quicksand', system-ui, sans-serif;
-    font-size: clamp(12px, 1.7vw, 15px); font-weight: 600;
-    letter-spacing: 0.6em; text-indent: 0.6em; color: #a7c3bd;
-    display: flex; align-items: center; gap: 14px; opacity: 0;
+    margin-top: 22px; font-family: 'Onest', system-ui, sans-serif;
+    font-size: clamp(11px, 1.5vw, 13px); font-weight: 500;
+    letter-spacing: 0.22em; text-indent: 0.22em; color: #a7c3bd;
+    display: flex; align-items: center; gap: 13px; opacity: 0;
     animation: rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
 }
 .tagline .dot {
