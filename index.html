@@ -18,11 +18,12 @@
 </head>
 <body>
     <nav class="nav" aria-label="Orb variations">
-        <a href="./index.html" class="active" aria-current="page">Wave</a>
+        <a href="./index.html" class="active" aria-current="page">Ribbon</a>
+        <a href="./v-wave.html">Wave</a>
         <a href="./v-bars.html">Bars</a>
         <a href="./v-mirror.html">Mirror</a>
-        <a href="./v-ribbon.html">Ribbon</a>
     </nav>
+    <button class="fonttoggle" id="fonttoggle" type="button" aria-label="Toggle wordmark font">Aa · Space Grotesk</button>
 
     <div id="backdrop"></div>
     <canvas id="stars" aria-hidden="true"></canvas>
@@ -55,9 +56,28 @@
 
     <div id="loader"><div class="ring"></div></div>
 
+    <script>
+        (function () {
+            var btn = document.getElementById('fonttoggle'); if (!btn) return;
+            var KEY = 'tl-font';
+            function apply(f) {
+                document.body.classList.toggle('font-onest', f === 'onest');
+                btn.textContent = 'Aa · ' + (f === 'onest' ? 'Onest' : 'Space Grotesk');
+            }
+            var cur = 'space';
+            try { cur = localStorage.getItem(KEY) || 'space'; } catch (e) {}
+            apply(cur);
+            btn.addEventListener('click', function () {
+                cur = (cur === 'onest') ? 'space' : 'onest';
+                try { localStorage.setItem(KEY, cur); } catch (e) {}
+                apply(cur);
+            });
+        })();
+    </script>
+
     <script type="module">
         import { initOrb } from './assets/orb.js';
-        initOrb({"mode":"voice","primary":"#3fe9c4","secondary":"#12a07a","density":1.8,"orbRotation":0,"twist":false,"chromaticAberration":0.01});
+        initOrb({"mode":"ribbon","primary":"#3fe9c4","secondary":"#12a07a","density":1.8,"orbRotation":0,"twist":false,"chromaticAberration":0.01});
     </script>
 </body>
 </html>

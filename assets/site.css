@@ -30,6 +30,12 @@
     font-style: normal; font-weight: 600; font-display: swap;
     src: url('../vendor/fonts/quicksand-latin-600-normal.woff2') format('woff2');
 }
+/* Onest — the alternate wordmark face (toggled against Space Grotesk). */
+@font-face {
+    font-family: 'Onest';
+    font-style: normal; font-weight: 600; font-display: swap;
+    src: url('../vendor/fonts/onest-latin-600-normal.woff2') format('woff2');
+}
 
 :root {
     --bg: #04070a;
@@ -138,6 +144,22 @@ body.no-webgl .hint { display: none; }
     font-size: clamp(30px, 5.4vw, 50px); font-weight: 600; letter-spacing: -0.015em;
     color: #f3fbf8; text-shadow: 0 0 16px rgba(47, 240, 200, 0.14);
 }
+/* Font toggle: swap the wordmark face to Onest. */
+body.font-onest .brand-name { font-family: 'Onest', system-ui, sans-serif; letter-spacing: -0.01em; }
+
+/* Wordmark font switcher (evaluation control). */
+.fonttoggle {
+    position: fixed; top: 16px; right: 16px; z-index: 6;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.04em;
+    color: rgba(200, 224, 219, 0.6); background: rgba(9, 18, 22, 0.5);
+    border: 1px solid rgba(120, 200, 190, 0.12); border-radius: 999px;
+    padding: 8px 14px; cursor: pointer;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    transition: color 0.2s ease, background 0.2s ease;
+    opacity: 0; animation: rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+}
+.fonttoggle:hover { color: #eafff9; }
+.fonttoggle:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 /* Contrast ramp: wordmark ~15:1 (above) · label ~5:1 · hint ~4.5:1 */
 .tagline {
     margin-top: 20px; font-family: 'Quicksand', system-ui, sans-serif;
@@ -183,6 +205,8 @@ body.no-webgl .hint { display: none; }
     }
     .nav::-webkit-scrollbar { display: none; }
     .nav a { padding: 7px 12px; font-size: 11px; }
+    /* Move the font toggle out of the nav's way on small screens. */
+    .fonttoggle { top: auto; bottom: 16px; right: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
