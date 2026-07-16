@@ -94,20 +94,25 @@ const STRUCT = {
         w += 0.32 * sin(x * 3.0  + t * 5.0);
         w += 0.16 * sin(x * 6.3  - t * 7.7);
         w += 0.09 * sin(x * 11.0 + t * 10.5);
+        w += 0.07 * sin(x * 19.0 - t * 13.0);   // spikier high-frequency detail
         float env = exp(-x * x * 0.55) * speech;
         w *= env;
         float dy = pos.y - w;
-        float line = exp(-(dy * dy) / 0.02);
+        float line = exp(-(dy * dy) / 0.014);    // thinner, sharper waveform
         float zfade = exp(-pos.z * pos.z * 0.6);
         float xin = exp(-x * x * 0.10);
         float core = smoothstep(2.0, 0.1, r);
-        float ribbon = line * zfade * xin * core * 1.8;
+        float ribbon = line * zfade * xin * core * 2.2;   // more energy
         // Radiating rings, brightened by the same envelope so they pulse on peaks.
         float rings = pow(0.5 + 0.5 * sin(r * 5.0 - t * 3.5), 4.0);
         float ringGlow = rings * smoothstep(2.0, 0.2, r) * (0.10 + 0.45 * speech) * 0.4;
-        // Faint interior fill so the globe still reads as a sphere.
-        float fill = smoothstep(2.0, 0.0, r) * 0.05;
-        return ribbon + ringGlow + fill;
+        // Soft moving internal haze so the orb reads as a deep sphere (volume),
+        // not a flat lit disc — sits behind the waveform at low amplitude.
+        float haze = (0.5 + 0.5 * sin(pos.x * 2.0 + t * 0.5))
+                   * (0.5 + 0.5 * sin(pos.y * 2.3 - t * 0.4))
+                   * (0.5 + 0.5 * sin(pos.z * 1.8 + t * 0.3));
+        haze *= smoothstep(2.0, 0.15, r) * 0.13;
+        return ribbon + ringGlow + haze;
     }`
 };
 
@@ -190,14 +195,16 @@ export function initOrb(userConfig) {
         secondary: '#524dac',     // wisp colour (thin regions)
         speed: 0.5,
         density: 1.5,
-        atmosphereGlow: 0.4,          // stronger halo so the orb owns the light
-        atmosphereLevel: 1.0,
-        atmosphereScale: 1.05,
+        // Soft outer bloom, not a tight bright ring — keeps the edge feeling
+        // like a glowing sphere rather than a hard-outlined circle.
+        atmosphereGlow: 0.22,
+        atmosphereLevel: 0.7,
+        atmosphereScale: 1.06,
         orbRotation: 0.3,
         internalAnim: 0.38,
         chromaticAberration: 0.014,
-        rimColor: '#6cead0',          // Fresnel rim tint (bright teal)
-        rimStrength: 0.35,
+        rimColor: '#6cead0',
+        rimStrength: 0.0,             // no hard Fresnel rim — soft edges preferred
         twist: true,
         // fractal-only tuning
         fractalIters: 4, fractalScale: 0.97, fractalDecay: -16.7,
@@ -236,7 +243,7 @@ export function initOrb(userConfig) {
 
     // Raise the orb into the upper portion of the screen (fraction of height)
     // with a camera view-offset, so the orbit target stays on the orb.
-    const ORB_SHIFT = 0.14;
+    const ORB_SHIFT = 0.11;
     function applyViewOffset() {
         camera.setViewOffset(window.innerWidth, window.innerHeight, 0, window.innerHeight * ORB_SHIFT, window.innerWidth, window.innerHeight);
     }

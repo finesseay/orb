@@ -2,27 +2,27 @@
    tracelayer — shared site styles (used by every orb variation page)
    --------------------------------------------------------------------------- */
 
-/* Self-hosted Quicksand — rounded geometric wordmark matching the logo.
-   Paths are relative to this file (assets/site.css). */
+/* Self-hosted type. Paths are relative to this file (assets/site.css).
+   Wordmark: Space Grotesk (technical geometric). Labels: IBM Plex Mono. */
 @font-face {
-    font-family: 'Quicksand';
-    font-style: normal; font-weight: 400; font-display: swap;
-    src: url('../vendor/fonts/quicksand-latin-400-normal.woff2') format('woff2');
-}
-@font-face {
-    font-family: 'Quicksand';
+    font-family: 'Space Grotesk';
     font-style: normal; font-weight: 500; font-display: swap;
-    src: url('../vendor/fonts/quicksand-latin-500-normal.woff2') format('woff2');
+    src: url('../vendor/fonts/space-grotesk-latin-500-normal.woff2') format('woff2');
 }
 @font-face {
-    font-family: 'Quicksand';
+    font-family: 'Space Grotesk';
     font-style: normal; font-weight: 600; font-display: swap;
-    src: url('../vendor/fonts/quicksand-latin-600-normal.woff2') format('woff2');
+    src: url('../vendor/fonts/space-grotesk-latin-600-normal.woff2') format('woff2');
 }
 @font-face {
-    font-family: 'Quicksand';
-    font-style: normal; font-weight: 700; font-display: swap;
-    src: url('../vendor/fonts/quicksand-latin-700-normal.woff2') format('woff2');
+    font-family: 'IBM Plex Mono';
+    font-style: normal; font-weight: 400; font-display: swap;
+    src: url('../vendor/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'IBM Plex Mono';
+    font-style: normal; font-weight: 500; font-display: swap;
+    src: url('../vendor/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2');
 }
 
 :root {
@@ -41,7 +41,7 @@ html, body {
     overflow: hidden;
     background-color: var(--bg);
     color: var(--text);
-    font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -52,8 +52,8 @@ html, body {
     /* Ground-lift vignette: near-black at the edges, lifted behind the orb so
        the sphere has something to sit against and reads brighter. */
     background:
-        radial-gradient(115% 75% at 50% 33%, rgba(24, 90, 82, 0.32) 0%, rgba(8, 20, 22, 0.55) 42%, #05080b 78%),
-        radial-gradient(42% 34% at 50% 33%, rgba(31, 220, 180, 0.07) 0%, rgba(0,0,0,0) 60%);
+        radial-gradient(115% 78% at 50% 38%, rgba(20, 78, 72, 0.22) 0%, rgba(7, 17, 20, 0.5) 44%, #05080b 78%),
+        radial-gradient(40% 32% at 50% 38%, rgba(31, 220, 180, 0.05) 0%, rgba(0,0,0,0) 60%);
 }
 
 #stars { position: fixed; inset: 0; z-index: 0; opacity: 0.7; pointer-events: none; }
@@ -61,7 +61,7 @@ html, body {
 /* Faint horizontal bloom behind the orb — kept very subtle so it never
    competes with the orb or (in voice mode) the waveform. */
 #streak {
-    position: fixed; left: 0; right: 0; top: 33%; height: 2px;
+    position: fixed; left: 0; right: 0; top: 38%; height: 2px;
     transform: translateY(-50%); z-index: 1; pointer-events: none;
     background: linear-gradient(90deg,
         rgba(47,240,200,0) 0%, rgba(47,240,200,0.035) 38%,
@@ -74,7 +74,7 @@ html, body {
 
 /* Static CSS orb — only revealed when WebGL can't run */
 #orb-fallback {
-    position: fixed; top: 34%; left: 50%;
+    position: fixed; top: 38%; left: 50%;
     width: min(48vw, 34vh); aspect-ratio: 1;
     transform: translate(-50%, -50%); z-index: 2;
     border-radius: 50%; display: none;
@@ -101,7 +101,8 @@ body.no-webgl .hint { display: none; }
     opacity: 0; animation: rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
 }
 .nav a {
-    font-size: 12px; font-weight: 600; letter-spacing: 0.03em;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
     color: rgba(200, 224, 219, 0.6); text-decoration: none;
     padding: 7px 15px; border-radius: 999px;
     transition: background 0.2s ease, color 0.2s ease; white-space: nowrap;
@@ -114,7 +115,7 @@ body.no-webgl .hint { display: none; }
 .overlay {
     position: fixed; inset: 0; z-index: 3;
     display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-    padding-bottom: clamp(48px, 12vh, 120px);
+    padding-bottom: clamp(56px, 16vh, 140px);
     pointer-events: none; text-align: center;
 }
 .brand {
@@ -127,13 +128,15 @@ body.no-webgl .hint { display: none; }
     filter: drop-shadow(0 0 10px rgba(47, 240, 200, 0.4));
 }
 .brand-name {
-    font-size: clamp(30px, 5.5vw, 52px); font-weight: 500; letter-spacing: 0.5px;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: clamp(30px, 5.4vw, 50px); font-weight: 600; letter-spacing: -0.015em;
     color: #f3fbf8; text-shadow: 0 0 16px rgba(47, 240, 200, 0.14);
 }
 /* Contrast ramp: wordmark ~15:1 (above) · label ~5:1 · hint ~4.5:1 */
 .tagline {
-    margin-top: 20px; font-size: clamp(12px, 1.7vw, 15px); font-weight: 600;
-    letter-spacing: 0.6em; text-indent: 0.6em; color: #a7c3bd;
+    margin-top: 20px; font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(11px, 1.5vw, 13px); font-weight: 500;
+    letter-spacing: 0.34em; text-indent: 0.34em; color: #a7c3bd;
     display: flex; align-items: center; gap: 14px; opacity: 0;
     animation: rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
 }
@@ -161,6 +164,7 @@ body.no-webgl .hint { display: none; }
 
 .hint {
     position: fixed; bottom: max(18px, env(safe-area-inset-bottom)); left: 0; right: 0; z-index: 3;
+    font-family: 'IBM Plex Mono', monospace;
     text-align: center; font-size: 11px; letter-spacing: 0.2em;
     color: #8ea39d; pointer-events: none; text-transform: uppercase;
 }
