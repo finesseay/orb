@@ -5,15 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>tracelayer — coming soon</title>
 <style>
-  /* Quicksand (self-hosted in the repo). Falls back gracefully in previews. */
   @font-face{
-    font-family:"Quicksand"; font-style:normal; font-weight:500;
-    font-display:swap;
+    font-family:"Quicksand"; font-style:normal; font-weight:500; font-display:swap;
     src:url("vendor/fonts/quicksand-latin-500-normal.woff2") format("woff2");
   }
   @font-face{
-    font-family:"Quicksand"; font-style:normal; font-weight:600;
-    font-display:swap;
+    font-family:"Quicksand"; font-style:normal; font-weight:600; font-display:swap;
     src:url("vendor/fonts/quicksand-latin-600-normal.woff2") format("woff2");
   }
 
@@ -24,13 +21,12 @@
     --ink:#e9eaf2;
     --muted:#aeb2c4;
 
-    --teal:#2ff0c8;        /* brand primary */
-    --indigo:#4f46e5;      /* brand secondary */
+    --teal:#2ff0c8;
+    --indigo:#4f46e5;
 
     --orb:260px;
     --spread:34px;
 
-    /* one shared ring shape, reused by every glow layer */
     --ring:radial-gradient(circle at 50% 50%,
       transparent 41%, #000 51%, #000 55%, transparent 71%);
   }
@@ -48,35 +44,43 @@
 
   .stage{
     display:flex; flex-direction:column; align-items:center;
-    gap:52px; text-align:center; padding:24px;
+    gap:56px; text-align:center; padding:24px;
   }
 
   /* ---- the orb ---- */
   .orb{ position:relative; width:var(--orb); height:var(--orb); isolation:isolate; }
 
-  /* Layer 1 — the steady teal→indigo ring. Drifts slowly so the two brand
-     colors trade places around the rim. Kept soft, not glary. */
+  /* dim, steady teal→indigo base ring so there's always a full halo */
   .corona{
     position:absolute; inset:calc(-1 * var(--spread)); border-radius:50%;
     background:conic-gradient(from 210deg,
       var(--teal), var(--indigo), var(--teal), var(--indigo), var(--teal));
     -webkit-mask:var(--ring); mask:var(--ring);
-    filter:blur(19px); opacity:.5;
-    animation:drift 22s linear infinite;
+    filter:blur(19px); opacity:.34;
+    animation:drift 26s linear infinite;
     z-index:1;
   }
 
-  /* Layer 2 — a bright spot of light that travels around the ring. This is
-     the "moving glow": a narrow, brighter arc that revolves faster than the
-     base, so a highlight sweeps continuously around the orb. */
-  .corona::after{
-    content:""; position:absolute; inset:0; border-radius:50%;
-    background:conic-gradient(from 0deg,
-      transparent 0deg, var(--teal) 14deg, #d7fff4 26deg,
-      var(--indigo) 40deg, transparent 82deg, transparent 360deg);
-    -webkit-mask:var(--ring); mask:var(--ring);
-    filter:blur(15px); opacity:.85; mix-blend-mode:screen;
-    animation:travel 6.5s linear infinite;
+  /* THE MOVING LIGHT — two glowing blobs (teal + indigo) that orbit the rim.
+     They sit on opposite sides of a wrapper that rotates, so two highlights
+     chase each other around the ring. Unmistakably in motion. */
+  .sweep{
+    position:absolute; inset:0; border-radius:50%; z-index:1;
+    animation:orbit 5.5s linear infinite;
+  }
+  .spark{
+    position:absolute; left:50%; width:140px; height:140px; margin-left:-70px;
+    border-radius:50%; mix-blend-mode:screen; filter:blur(17px);
+  }
+  .spark--teal{
+    top:0; margin-top:-64px;
+    background:radial-gradient(circle,
+      rgba(215,255,244,.95), rgba(47,240,200,.7) 38%, transparent 68%);
+  }
+  .spark--indigo{
+    bottom:0; margin-bottom:-64px;
+    background:radial-gradient(circle,
+      rgba(150,140,255,.9), rgba(79,70,229,.6) 40%, transparent 70%);
   }
 
   /* the dark sphere over the corona centre */
@@ -86,28 +90,28 @@
     box-shadow:
       inset 0 -10px 30px rgba(0,0,0,.85),
       inset 0 4px 14px rgba(255,255,255,.03);
-    display:grid; place-items:center; z-index:2;
+    z-index:2;
   }
 
-  /* the tracelayer pulse mark, white on the dark disc */
-  .mark{
-    width:44%; color:var(--ink);
-    filter:drop-shadow(0 2px 10px rgba(0,0,0,.55));
-  }
+  /* ---- brand lockup under the orb ---- */
+  .brand{ display:flex; flex-direction:column; align-items:center; gap:22px; }
 
-  /* ---- copy ---- */
-  .wordmark{
-    margin:0; font-size:clamp(30px,7vw,52px); font-weight:600;
+  .logo{ display:inline-flex; align-items:center; gap:18px; }
+  .logo-icon{
+    width:64px; height:64px; border-radius:18px;
+    background:linear-gradient(140deg, var(--indigo) 5%, #4b7ce8 45%, var(--teal) 100%);
+    display:grid; place-items:center;
+    box-shadow:0 12px 30px rgba(79,70,229,.35), inset 0 1px 1px rgba(255,255,255,.25);
+  }
+  .logo-icon svg{ width:54%; color:#fff; }
+  .logo-word{
+    font-size:clamp(34px,7vw,50px); font-weight:600;
     letter-spacing:.005em; color:#c7cbe6;
   }
 
-  /* Coming-soon pill with a glowing dot */
+  /* coming-soon — standalone text with a glowing dot */
   .badge{
     display:inline-flex; align-items:center; gap:10px;
-    margin-top:20px; padding:8px 16px 8px 14px;
-    border-radius:999px;
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.08);
     font-size:11px; font-weight:600; letter-spacing:.28em;
     text-transform:uppercase; color:var(--muted);
   }
@@ -117,12 +121,12 @@
     animation:blink 2.6s ease-in-out infinite;
   }
 
-  @keyframes drift  { to { transform:rotate(-360deg); } }
-  @keyframes travel { to { transform:rotate(360deg); } }
-  @keyframes blink  { 0%,100%{ opacity:1 } 50%{ opacity:.35 } }
+  @keyframes orbit { to { transform:rotate(360deg); } }
+  @keyframes drift { to { transform:rotate(-360deg); } }
+  @keyframes blink { 0%,100%{ opacity:1 } 50%{ opacity:.35 } }
 
   @media (prefers-reduced-motion:reduce){
-    .corona, .corona::after, .dot{ animation:none }
+    .corona,.sweep,.dot{ animation:none }
   }
 </style>
 </head>
@@ -130,18 +134,23 @@
   <main class="stage">
     <div class="orb" role="img" aria-label="tracelayer glowing orb">
       <div class="corona"></div>
-      <div class="disc">
-        <!-- pulse / trace mark from the tracelayer logo -->
-        <svg class="mark" viewBox="0 0 100 40" fill="none"
-             stroke="currentColor" stroke-width="7"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M5 22 H30 L40 6 L52 34 L59 22 H95"/>
-        </svg>
+      <div class="sweep">
+        <span class="spark spark--teal"></span>
+        <span class="spark spark--indigo"></span>
       </div>
+      <div class="disc"></div>
     </div>
 
-    <div>
-      <h1 class="wordmark">tracelayer</h1>
+    <div class="brand">
+      <div class="logo">
+        <span class="logo-icon">
+          <svg viewBox="0 0 100 40" fill="none" stroke="currentColor" stroke-width="8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 22 H30 L40 6 L52 34 L59 22 H94"/>
+          </svg>
+        </span>
+        <span class="logo-word">tracelayer</span>
+      </div>
       <span class="badge"><span class="dot"></span>Coming soon</span>
     </div>
   </main>
