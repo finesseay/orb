@@ -897,7 +897,7 @@
   </div>
   <div class="dock-view view-done">
     <span class="dock-mark" data-mark="30"></span>
-    <span class="dock-done-text num" id="dockDoneText">You're in — <b>#0000</b> · <span class="up">share to move up</span></span>
+    <span class="dock-done-text num" id="dockDoneText">You're in — <span class="up">welcome to the founding cohort</span></span>
     <button class="dock-round" id="dockCopy" aria-label="Copy your invite link" title="Copy your invite link">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
     </button>
@@ -1794,11 +1794,10 @@
       hint('We bring people in a few at a time — early spots get the full setup treatment.');
     }
     if(state==='done'&&saved){
-      var aheadTxt=(saved.ahead===null||saved.ahead===undefined)?'':saved.ahead.toLocaleString()+' ahead \u00b7 ';
-      $('dockDoneText').innerHTML='You\u2019re in \u2014 <b>#'+String(saved.num).padStart(4,'0')+'</b> \u00b7 <span class="up">'+aheadTxt+'share to move up</span>';
+      $('dockDoneText').innerHTML='You\u2019re in \u2014 <span class="up">welcome to the founding cohort</span>';
       hint(saved.real
-        ?'Copy your invite link \u2014 <b>every signup moves you up 10 places</b>.'
-        :'Spot saved \u2014 your final number is confirmed when the queue syncs.');
+        ?'Copy your invite link \u2014 <b>bring someone with you</b>.'
+        :'Spot saved \u2014 you\u2019re on the list.');
     }
     setMuffle(state!=='idle');
     onScroll();
@@ -1897,11 +1896,11 @@
     var ng=x.createLinearGradient(W*.3,0,W*.7,0);
     ng.addColorStop(0,'#8b8df6');ng.addColorStop(1,'#2dd4bf');
     x.fillStyle=ng;
-    x.font='700 200px Consolas,monospace';
-    x.fillText('#'+String(saved.num).padStart(4,'0'),W/2,790);
+    x.font='600 92px system-ui,sans-serif';
+    x.fillText('I\u2019m on the waitlist',W/2,760);
     x.fillStyle='#9DB0AB';
     x.font='400 36px system-ui,sans-serif';
-    x.fillText('I\u2019m on the waitlist',W/2,870);
+    x.fillText('AI agents, checked at every step \u2014 with proof',W/2,850);
     x.strokeStyle='rgba(151,214,205,.35)';x.lineWidth=2;
     var pw=680,ph=86,px=(W-pw)/2,py=1000;
     x.beginPath();
@@ -1912,7 +1911,7 @@
     x.fillText('tracelayer.com/?invite='+saved.ref,W/2,py+55);
     x.fillStyle='#5D6F6B';
     x.font='400 28px system-ui,sans-serif';
-    x.fillText('every signup moves me up 10 places',W/2,1195);
+    x.fillText('join me — tracelayer.com',W/2,1195);
     return c;
   }
   $('dockPoster').addEventListener('click',function(){
@@ -1938,7 +1937,7 @@
     var self=this;
     var done=function(){
       self.style.color='var(--live)';tick();
-      hint('Invite link copied — <b>every signup moves you up 10 places</b>.');
+      hint('Invite link copied — <b>send it to someone who needs this</b>.');
       setTimeout(function(){self.style.color=''},1400);
     };
     if(navigator.clipboard&&navigator.clipboard.writeText){
