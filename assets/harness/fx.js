@@ -166,14 +166,14 @@
       'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
       'float noise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);f=f*f*(3.-2.*f);',
       ' return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}',
-      'float fbm(vec2 p){float v=0.;float a=.5;for(int i=0;i<3;i++){v+=a*noise(p);p*=2.03;a*=.5;}return v;}',
+      'float fbm(vec2 p){float v=0.;float a=.5;mat2 r=mat2(.8,.6,-.6,.8);for(int i=0;i<3;i++){v+=a*noise(p);p=r*p*2.03;a*=.5;}return v;}',
       'float glow(vec2 uv,vec2 c,float r){float d=length(uv-c);return exp(-d*d/(r*r));}',
       'void main(){',
       ' vec2 uv=gl_FragCoord.xy/u_res;uv.x*=u_res.x/u_res.y;',
       ' vec2 m=u_m;m.x*=u_res.x/u_res.y;',
       ' float t=u_t*.06;',
       ' vec2 warp=vec2(fbm(uv*2.2+t),fbm(uv*2.2-t))-.5;',
-      ' vec2 p=uv+warp*.22;',
+      ' vec2 p=uv+warp*.15;',
       ' vec2 base=vec2(u_res.x/u_res.y*.5+.07,.5);',
       ' vec2 lean=(m-base)*.18*u_mw;',
       ' vec2 c1=base+lean+vec2(sin(t*1.3)*.06-.05,cos(t*1.1)*.05-.03);',
@@ -186,6 +186,8 @@
       ' col+=col*fbm(p*3.5+t*1.7)*.35;',
       ' float contain=exp(-dot(uv-base,uv-base)/.34);',
       ' col*=contain;',
+      ' col+=(hash(gl_FragCoord.xy+fract(u_t)*7.)-.5)*.014;',
+      ' col=max(col,0.);',
       ' float a=clamp(max(max(col.r,col.g),col.b),0.,1.);',
       ' gl_FragColor=vec4(col,a);',
       '}'].join('\n');
@@ -211,7 +213,7 @@
         uT = gl.getUniformLocation(prog, 'u_t'),
         uM = gl.getUniformLocation(prog, 'u_m'),
         uMw = gl.getUniformLocation(prog, 'u_mw');
-    var GDPR = Math.min(window.devicePixelRatio || 1, 1) * 0.75;
+    var GDPR = Math.min(window.devicePixelRatio || 1, 1.25);
     var w = 0, h = 0;
     function size() {
       w = Math.max(2, Math.round(canvas.clientWidth * GDPR));
@@ -272,7 +274,7 @@
     var x0 = Math.max(0, Math.floor(cx - 300)), x1 = Math.min(w, Math.ceil(cx + 300));
     var y0 = Math.max(0, Math.floor(cy - 300)), y1 = Math.min(h, Math.ceil(cy + 300));
     for (var y = y0; y < y1; y += cell) for (var x = x0; x < x1; x += cell) {
-      if (data[(y * w + x) * 4 + 3] > 100 && Math.random() < 0.82) {
+      if (data[(y * w + x) * 4 + 3] > 100 && Math.random() < 0.62) {
         pts.push({
           tx: x + (Math.random() - 0.5) * cell * 0.9,
           ty: y + (Math.random() - 0.5) * cell * 0.9,
@@ -402,7 +404,7 @@
           tx: p.tx, ty: p.ty, tz: (Math.random() - 0.5) * 16,
           x: p.tx + (p.x - p.tx) * 0.55, y: p.ty + (p.y - p.ty) * 0.55,
           z: (Math.random() - 0.5) * 240,
-          sz: p.sz * 1.25, a: p.a, dx: p.dx, dy: p.dy, ph: p.ph,
+          sz: p.sz * 1.05, a: p.a, dx: p.dx, dy: p.dy, ph: p.ph,
           accent: p.accent, boost: 0
         };
         if (TEST) { m.x = m.tx; m.y = m.ty; m.z = m.tz; }
@@ -415,7 +417,7 @@
       var col = new THREE.Color();
       for (var i = 0; i < meta.length; i++) {
         var m = meta[i];
-        col.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 1.9);
+        col.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 1.0);
         mesh.setColorAt(i, col);
         dummy.position.set(m.x, m.y, m.z);
         dummy.scale.setScalar(m.sz);
@@ -481,7 +483,7 @@
         m.z += (gz - m.z) * 0.07;
         if (Math.abs(boost - m.boost) > 0.02) {
           m.boost = boost;
-          col2.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 1.9 * (1 + boost * 1.4));
+          col2.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 1.0 * (1 + boost * 2.6));
           mesh.setColorAt(i, col2);
           needColor = true;
         }
