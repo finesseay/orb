@@ -22,78 +22,123 @@
   .tl2-em{font-style:italic;letter-spacing:-.01em}
 
   /* layout */
-  .tl-hero-grid{display:grid;grid-template-columns:60fr 40fr;gap:80px;align-items:center}
-  .tl2-split{display:grid;grid-template-columns:1fr 1fr;gap:7vw;align-items:center;padding:88px 0}
-  .tl2-split.rev .tl2-copy{order:2}
-  .tl2-split.rev .tl2-visual{order:1}
+  .tl-hero-grid{display:grid;grid-template-columns:52fr 48fr;gap:56px;align-items:center}
+  .tl-feat-block{cursor:pointer}
   @media (max-width:980px){
     .tl-hero-grid{grid-template-columns:1fr !important;gap:48px !important}
     .tl-eyebrow{white-space:normal !important}
-    .tl2-split{grid-template-columns:1fr;gap:44px;padding:60px 0}
-    .tl2-split.rev .tl2-copy,.tl2-split.rev .tl2-visual{order:initial}
-    .tl2-board-inner{grid-template-columns:1fr !important}
-    .tl2-board-chat{border-left:0 !important;border-top:1px solid #eef0ef}
+    .tlq-compose{min-height:0 !important}
+    .tlq-board,.tlq-bridge{display:none}
+    .tlq-chat{position:static !important;width:100% !important;min-width:0 !important}
+    .tl-show-grid{grid-template-columns:1fr !important;gap:40px !important}
+    .tl-feat-block{min-height:0 !important;padding:36px 0 !important}
+    .tl-sticky-panel{position:static !important}
+    .tl2-grid6{grid-template-columns:1fr 1fr}
     .tl-ea-chip{display:none}
   }
+  @media (max-width:640px){.tl2-grid6{grid-template-columns:1fr}}
 
-  /* dark mock cards (hero chat, engines) */
-  .tl2-window{border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.25);backdrop-filter:blur(24px);overflow:hidden}
-  .tl2-winbar{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--ds-color-border-default)}
+  /* deepseek-glass windows */
   .tl2-dots{display:flex;align-items:center;gap:7px}
-  .tl2-dots span{width:11px;height:11px;border-radius:50%;background:#ff5f57}
+  .tl2-dots span{width:10px;height:10px;border-radius:50%;background:#ff5f57}
   .tl2-dots span:nth-child(2){background:#febc2e}
   .tl2-dots span:nth-child(3){background:#28c840}
-  .tl2-wintitle{font-family:var(--ds-font-mono);font-size:10px;color:var(--ds-color-text-description)}
-  .tl2-chat{display:grid;gap:10px;padding:16px}
-  .tl2-msg{display:flex;gap:9px;align-items:flex-start}
-  .tl2-msg.me{justify-content:flex-end}
-  .tl2-bubble{max-width:82%;border:1px solid rgba(255,255,255,.08);border-radius:11px;padding:9px 12px;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.82);background:rgba(255,255,255,.04)}
-  .tl2-msg.me .tl2-bubble{background:rgba(99,102,241,.16);border-color:rgba(129,131,246,.35)}
-  .tl2-av{width:24px;height:24px;flex:none;border-radius:8px;display:grid;place-items:center;font-size:10px;font-weight:700;color:#fff;background:linear-gradient(135deg,#6366F1,#14B8A6)}
-  .tl2-av.w{background:#1e2b29;color:#7edfd2;border:1px solid rgba(45,212,191,.3)}
-  .tl2-activity{margin-left:33px;padding:8px 11px;border-left:2px solid #2dd4bf;background:rgba(45,212,191,.08);border-radius:0 9px 9px 0;font-size:11px;color:#9ff0e4}
-  .tl2-ready{margin-left:33px;font-size:11px;color:rgba(255,255,255,.55)}
-  .tl2-ready b{color:#7edfd2;font-weight:500}
+  .qwin{border-radius:12px;background:linear-gradient(180deg,rgba(30,42,66,.85),rgba(14,22,38,.92));border:1px solid rgba(255,255,255,.09);box-shadow:0 34px 80px rgba(0,0,0,.6),0 6px 20px rgba(0,0,0,.4);overflow:hidden;backdrop-filter:blur(6px)}
+  .qtabs{display:flex;align-items:center;gap:2px;padding:8px 10px 0;background:rgba(255,255,255,.02)}
+  .qtab{padding:8px 16px 9px;font-size:12px;color:rgba(255,255,255,.42);border-radius:9px 9px 0 0}
+  .qtab.on{background:rgba(255,255,255,.055);color:#fff;font-weight:600}
+  .qbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px 2px}
+  .qloz{font-size:8.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#7edfd2;background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.3);border-radius:99px;padding:3px 9px;white-space:nowrap}
 
-  /* light app window (board + task chat) */
-  .tl2-app{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 80px rgba(0,0,0,.5), 0 4px 18px rgba(0,0,0,.35);background:#fff;color:#172B4D;font-family:var(--ds-font-sans)}
-  .tl2-app-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F7F8F9;border-bottom:1px solid #e8eaed}
-  .tl2-app-bar .tl2-wintitle{color:#6b7a90}
-  .tl2-board-inner{display:grid;grid-template-columns:1.5fr 1fr}
-  .tl2-lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px}
-  .tl2-lane{background:#F7F8F9;border:1px solid #eef0ef;border-radius:9px;padding:8px;min-height:170px}
-  .tl2-lane-name{display:flex;justify-content:space-between;color:#8a93a6;font-size:8.5px;text-transform:uppercase;letter-spacing:.08em;padding:2px 3px 8px}
-  .tl2-card{background:#fff;border:1px solid #e8eaed;border-radius:8px;padding:9px;margin-bottom:7px;box-shadow:0 1px 3px rgba(23,43,77,.06)}
-  .tl2-card b{display:block;font-size:9.5px;line-height:1.35;font-weight:600;color:#172B4D}
-  .tl2-card span{display:block;margin-top:6px;font-size:8.5px;color:#8a93a6}
-  .tl2-card.sel{border-color:#7fd8cd;background:#fbfffe;box-shadow:0 0 0 2px #DFF7F3}
-  .tl2-card.needs{border-color:#ecd9a0;background:#fffdf5}
-  .tl2-edot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px;vertical-align:1px}
-  .tl2-board-chat{border-left:1px solid #eef0ef;padding:12px;display:flex;flex-direction:column;gap:8px}
-  .tl2-board-chat h4{margin:0 0 2px;font-size:10.5px;color:#172B4D;display:flex;align-items:center;justify-content:space-between;gap:8px}
-  .tl2-loz{font-size:8px;font-weight:600;padding:2px 7px;border-radius:99px;background:#DFF7F3;color:#0F766E;text-transform:uppercase;letter-spacing:.05em}
-  .tl2-lmsg{font-size:9.5px;line-height:1.5;color:#44546f;background:#F7F8F9;border:1px solid #eef0ef;border-radius:9px;padding:7px 9px;max-width:92%}
-  .tl2-lmsg.me{align-self:flex-end;background:#eef0ff;border-color:#dcdcf8;color:#3b3f75}
-  .tl2-lmsg .who{display:block;font-size:8px;font-weight:700;color:#0F766E;margin-bottom:2px}
-  .tl2-lact{font-size:8.5px;color:#0F766E;background:#f2fbf9;border-left:2px solid #0F766E;padding:6px 8px;border-radius:0 7px 7px 0}
-  .tl2-lsys{font-size:8.5px;color:#8a93a6}
+  /* hero composition: board behind, task chat in front */
+  .tlq-compose{position:relative;width:100%;min-height:490px}
+  .tlq-board{position:absolute;left:0;top:0;width:100%;filter:brightness(.82) saturate(.9)}
+  .tlq-lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 12px 14px}
+  .tlq-lane{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:7px;min-height:200px}
+  .tlq-lane-h{display:flex;justify-content:space-between;font-family:var(--ds-font-mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);padding:2px 3px 8px}
+  .tlq-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:8px 9px;margin-bottom:7px}
+  .tlq-card b{display:block;font-size:9.5px;font-weight:600;line-height:1.35;color:rgba(255,255,255,.88)}
+  .tlq-card .meta{display:flex;align-items:center;gap:5px;margin-top:6px;font-size:8px;color:rgba(255,255,255,.45)}
+  .tlq-edot{width:6px;height:6px;border-radius:50%;flex:none}
+  .tlq-card.sel{border-color:rgba(45,212,191,.65);box-shadow:0 0 0 2px rgba(45,212,191,.16),0 6px 18px rgba(45,212,191,.12)}
+  .tlq-card.needs{border-color:rgba(254,188,46,.4);background:rgba(254,188,46,.06)}
+  .tlq-bridge{position:absolute;z-index:5;pointer-events:none;left:24%;top:128px}
+  .tlq-chat{position:absolute;right:-10px;top:64px;width:58%;min-width:330px;z-index:6}
+  .tlq-chat .qwin{box-shadow:0 44px 100px rgba(0,0,0,.7),0 10px 30px rgba(0,0,0,.5)}
+  .tlq-thread{display:flex;flex-direction:column;gap:9px;padding:12px 13px 4px}
+  .tlq-m{display:flex;gap:8px;align-items:flex-start}
+  .tlq-m.me{flex-direction:row-reverse}
+  .tlq-av{width:24px;height:24px;flex:none;border-radius:8px;display:grid;place-items:center;font-size:9.5px;font-weight:700;color:#fff}
+  .tlq-av.hu{background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.14)}
+  .tlq-av.pm{background:linear-gradient(135deg,#6366F1,#14B8A6)}
+  .tlq-av.wk{background:rgba(45,212,191,.1);color:#7edfd2;border:1px solid rgba(45,212,191,.4)}
+  .tlq-bub{max-width:86%;font-size:10.5px;line-height:1.5;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:7px 10px;color:rgba(255,255,255,.8);background:rgba(255,255,255,.05)}
+  .tlq-m.me .tlq-bub{background:rgba(99,102,241,.16);border-color:rgba(99,102,241,.32);color:#cdd2ff}
+  .tlq-who{display:flex;align-items:center;gap:5px;font-size:8px;font-weight:700;color:#7edfd2;margin-bottom:3px}
+  .tlq-who.hu{color:rgba(255,255,255,.5)}
+  .tlq-act{margin-left:32px;border-left:2px solid #2dd4bf;background:rgba(45,212,191,.07);border-radius:0 8px 8px 0;padding:6px 9px;font-size:9.5px;color:#8fe8da}
+  .tlq-sys{margin-left:32px;font-size:9.5px;color:rgba(255,255,255,.45)}
+  .tlq-sys b{color:#7edfd2;font-weight:600}
+  .tlq-composer{display:flex;align-items:center;gap:8px;margin:6px 12px 12px;border:1px solid rgba(255,255,255,.09);border-radius:11px;padding:7px 7px 7px 11px;background:rgba(255,255,255,.04)}
+  .tlq-composer span{flex:1;font-size:10px;color:rgba(255,255,255,.32)}
+  .tlq-send{width:26px;height:26px;border-radius:8px;background:#2dd4bf;display:grid;place-items:center;flex:none}
 
-  /* engines panel */
-  .tl2-engines{display:flex;flex-wrap:wrap;gap:10px;padding:20px}
-  .tl2-engine{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:99px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);font-size:12.5px;color:rgba(255,255,255,.85)}
-  .tl2-engine i{width:8px;height:8px;border-radius:50%;display:block}
-  .tl2-engines-note{padding:0 20px 18px;font-family:var(--ds-font-mono);font-size:10.5px;color:var(--ds-color-text-description)}
+  /* what it does grid */
+  .tl2-grid6{border:1px solid var(--ds-color-border-default);border-radius:4px;display:grid;grid-template-columns:repeat(3,1fr);background:var(--ds-color-border-default);gap:1px;overflow:hidden}
+  .tl2-tile{background:#0d0f12;padding:24px 24px 26px;display:flex;flex-direction:column;gap:10px;min-height:180px}
+  .tl2-tile .ticon{width:20px;height:20px;color:rgba(255,255,255,.75)}
+  .tl2-tile b{font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#2DD4BF;font-weight:500;margin-top:2px}
+  .tl2-tile p{font-size:13px;line-height:1.6;color:var(--ds-color-text-description);margin:0}
+  .tl2-logorow{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;align-items:center;padding-top:8px}
+  .tl2-lg{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);display:grid;place-items:center}
+  .tl2-lg svg{width:13px;height:13px}
+  .tl2-lgmore{font-family:var(--ds-font-mono);font-size:9px;color:rgba(255,255,255,.35)}
 
-  /* knowledge panel */
-  .tl2-doc{padding:14px}
-  .tl2-doc h4{margin:0 0 10px;font-size:11px;color:#172B4D;display:flex;justify-content:space-between;align-items:center}
-  .tl2-doc-row{display:flex;align-items:center;gap:8px;padding:8px 9px;border-top:1px solid #eef0ef;font-size:10px;color:#44546f}
-  .tl2-doc-row:first-of-type{border-top:0}
-  .tl2-diff{border:1px solid #d9efe8;background:#fbfffd;border-radius:9px;padding:9px;margin:6px 0}
-  .tl2-diff .tag{display:inline-block;font-size:8px;font-weight:700;color:#0F766E;background:#DFF7F3;border-radius:99px;padding:2px 8px;margin-bottom:6px}
-  .tl2-diff .del{display:block;font-size:9.5px;color:#b4452f;background:#fdf1ee;text-decoration:line-through;border-radius:5px;padding:3px 7px;margin-bottom:3px}
-  .tl2-diff .add{display:block;font-size:9.5px;color:#1d6b4f;background:#ecf9f2;border-radius:5px;padding:3px 7px}
-  .tl2-doc-foot{border-top:1px solid #eef0ef;margin-top:8px;padding-top:9px;font-family:var(--ds-font-mono);font-size:8.5px;color:#8a93a6}
+  /* engines window (sticky panel 0) */
+  .engwin{border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(10,12,15,.85);overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.5)}
+  .engbar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.09)}
+  .engbar .addr{font-family:var(--ds-font-mono);font-size:9.5px;color:rgba(255,255,255,.34)}
+  .englogos{display:flex;flex-wrap:wrap;gap:8px;padding:16px 16px 4px}
+  .lchip{display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:0 13px 0 10px;border-radius:99px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);font-size:12px;color:rgba(255,255,255,.88)}
+  .lchip svg{width:15px;height:15px;display:block}
+  .lchip.more{color:rgba(255,255,255,.34);border-style:dashed}
+  .engsteps{margin:13px 16px 16px;border:1px solid rgba(255,255,255,.09);border-radius:11px;overflow:hidden}
+  .engsteps-h{display:grid;grid-template-columns:1.4fr 1fr .8fr;gap:10px;padding:8px 12px;font-family:var(--ds-font-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.34);border-bottom:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.02)}
+  .srow{display:grid;grid-template-columns:1.4fr 1fr .8fr;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.09);font-size:11.5px}
+  .srow:last-child{border-bottom:0}
+  .srow .sname{color:rgba(255,255,255,.8)}
+  .srow .sname i{font-family:var(--ds-font-mono);font-style:normal;color:rgba(255,255,255,.34);margin-right:8px;font-size:10px}
+  .mpick{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.85)}
+  .mpick svg{width:12px;height:12px}
+  .meter{display:flex;align-items:center;gap:7px;font-family:var(--ds-font-mono);font-size:9px;color:rgba(255,255,255,.34)}
+  .bars{display:inline-flex;gap:2px}
+  .bars i{width:8px;height:4px;border-radius:2px;background:rgba(255,255,255,.14);display:block}
+  .bars i.on{background:#2DD4BF}
+  .engfoot{padding:0 16px 14px;font-family:var(--ds-font-mono);font-size:9.5px;color:rgba(255,255,255,.34)}
+
+  /* platform agents roster (sticky panel 1) */
+  .roster{border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(10,12,15,.85);overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.5)}
+  .roster-h{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.09)}
+  .roster-h b{font-size:13px;font-weight:600;color:rgba(255,255,255,.9)}
+  .rlive{display:inline-flex;align-items:center;gap:7px;font-family:var(--ds-font-mono);font-size:9.5px;color:#7edfd2}
+  .rpulse{width:7px;height:7px;border-radius:50%;background:#2DD4BF;animation:tl2pl 2.4s ease-out infinite}
+  @keyframes tl2pl{0%{box-shadow:0 0 0 0 rgba(45,212,191,.45)}70%{box-shadow:0 0 0 8px rgba(45,212,191,0)}100%{box-shadow:0 0 0 0 rgba(45,212,191,0)}}
+  .arow{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.09)}
+  .arow:last-of-type{border-bottom:0}
+  .atile{width:32px;height:32px;flex:none;border-radius:9px;display:grid;place-items:center;color:#eafffa}
+  .atile svg{width:15px;height:15px}
+  .at1{background:linear-gradient(135deg,#4f46c9,#2b8f83)}
+  .at2{background:linear-gradient(135deg,#0c6b60,#2DD4BF)}
+  .at3{background:linear-gradient(135deg,#324065,#5a63d8)}
+  .at4{background:linear-gradient(135deg,#0e5a54,#6366F1)}
+  .at5{background:linear-gradient(135deg,#215e7c,#2DD4BF)}
+  .ainfo{flex:1;min-width:0}
+  .ainfo b{display:block;font-size:12px;font-weight:600;color:rgba(255,255,255,.9)}
+  .ainfo span{display:block;font-size:10.5px;color:rgba(255,255,255,.55);margin-top:1px}
+  .alast{font-family:var(--ds-font-mono);font-size:8.5px;color:rgba(255,255,255,.34);text-align:right;white-space:nowrap}
+  .alast b{display:block;color:#7edfd2;font-weight:400}
+  .roster-f{padding:10px 16px;border-top:1px solid rgba(255,255,255,.09);font-size:10.5px;color:rgba(255,255,255,.55)}
+  .roster-f b{color:#9ff0e4;font-weight:500}
 
   /* waitlist dock */
   .tl2-dock{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:80;display:flex;align-items:center;border-radius:999px;border:1px solid rgba(151,214,205,.18);background:rgba(6,12,11,.72);backdrop-filter:blur(14px);box-shadow:0 12px 40px rgba(0,0,0,.5);padding:7px;transition:box-shadow .3s ease}
@@ -122,6 +167,7 @@
     .rv,.rv--blur{opacity:1 !important;transform:none !important;filter:none !important;transition:none !important}
     .ds-hero-enter{animation:none !important}
     .tl2-dock.shake{animation:none}
+    .rpulse{animation:none}
   }
 </style>
 <noscript><style>.rv,.rv--blur{opacity:1;transform:none;filter:none}</style></noscript>
@@ -175,96 +221,200 @@
           </div>
         </div>
         <div class="ds-hero-enter" style="--enter-y:20px;animation-duration:0.9s;animation-delay:0.4s;min-width:0">
-          <div class="tl2-window" aria-label="A TraceLayer task conversation">
-            <div class="tl2-winbar"><div class="tl2-dots"><span></span><span></span><span></span></div><span class="tl2-wintitle">task · fix export labels</span></div>
-            <div class="tl2-chat">
-              <div class="tl2-msg me"><div class="tl2-bubble">The export dates are showing US format — they should be DD/MM.</div></div>
-              <div class="tl2-msg"><span class="tl2-av">A</span><div class="tl2-bubble">Filed in Billing. Nadia is on it — two steps, small change.</div></div>
-              <div class="tl2-activity"><strong>Nadia · Working</strong> — step 2 of 2 · format check passed</div>
-              <div class="tl2-ready">Ready for review — preview attached. <b>Your call.</b></div>
+          <div class="tlq-compose" role="img" aria-label="A TraceLayer task: the board card and its chat are the same thing — teammates and agents in one thread">
+            <div class="tlq-board">
+              <div class="qwin">
+                <div class="qtabs"><span class="qtab">Task chat</span><span class="qtab on">Board</span></div>
+                <div class="qbar"><div class="tl2-dots"><span></span><span></span><span></span></div><span style="font-family:var(--ds-font-mono);font-size:9.5px;color:rgba(255,255,255,.4)">app.tracelayer.com · Billing</span></div>
+                <div class="tlq-lanes">
+                  <div class="tlq-lane">
+                    <div class="tlq-lane-h"><span>In progress</span><span>2</span></div>
+                    <div class="tlq-card sel"><b>Fix export date labels</b><div class="meta"><i class="tlq-edot" style="background:#D97757"></i>Nadia · step 2 of 2</div></div>
+                    <div class="tlq-card"><b>Refresh pricing copy</b><div class="meta"><i class="tlq-edot" style="background:#08bdba"></i>Planning · reading</div></div>
+                  </div>
+                  <div class="tlq-lane">
+                    <div class="tlq-lane-h"><span>Needs you</span><span>1</span></div>
+                    <div class="tlq-card needs"><b>Choose the empty-state direction</b><div class="meta">one decision needed</div></div>
+                  </div>
+                  <div class="tlq-lane">
+                    <div class="tlq-lane-h"><span>Review</span><span>1</span></div>
+                    <div class="tlq-card"><b>Add account timeline</b><div class="meta" style="color:#7edfd2">checks passed · preview ready</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <svg class="tlq-bridge" style="width:180px;height:70px" viewBox="0 0 180 70" fill="none" aria-hidden="true">
+              <path d="M4 10 C 70 10, 110 60, 176 60" stroke="#2DD4BF" stroke-width="1.5" stroke-dasharray="1 6" stroke-linecap="round" opacity=".8"></path>
+              <circle cx="4" cy="10" r="3" fill="#2DD4BF"></circle>
+            </svg>
+            <div class="tlq-chat">
+              <div class="qwin">
+                <div class="qtabs"><span class="qtab on">Task chat</span><span class="qtab">Board</span></div>
+                <div class="qbar"><div class="tl2-dots"><span></span><span></span><span></span></div><span style="display:inline-flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:600;color:rgba(255,255,255,.85)">Fix export date labels</span><span class="qloz">In progress</span></span></div>
+                <div class="tlq-thread">
+                  <div class="tlq-m"><span class="tlq-av hu">S</span><div><div class="tlq-who hu">Sam · design</div><div class="tlq-bub">Customers keep emailing about the export dates.</div></div></div>
+                  <div class="tlq-m me"><span class="tlq-av hu">Y</span><div><div class="tlq-bub">Dates are US format — should be DD/MM everywhere.</div></div></div>
+                  <div class="tlq-m"><span class="tlq-av pm">A</span><div><div class="tlq-who">Aria · PM</div><div class="tlq-bub">Filed here in Billing. Nadia&rsquo;s taking it — two steps, small change.</div></div></div>
+                  <div class="tlq-m"><span class="tlq-av wk">N</span><div><div class="tlq-who"><i class="tlq-edot" style="background:#D97757"></i>Nadia · worker</div><div class="tlq-bub">Locale set to DD/MM across exports. Running the format check now.</div></div></div>
+                  <div class="tlq-act">step 2 of 2 · format check passed</div>
+                  <div class="tlq-sys">Ready for review — preview attached. <b>Your call.</b></div>
+                </div>
+                <div class="tlq-composer"><span>Reply to the task…</span><span class="tlq-send"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 10V2M2.5 5.5 6 2l3.5 3.5" stroke="#06251f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="ds-container" style="padding-top:36px;padding-bottom:20px">
+    <section class="ds-container" style="padding-top:110px;padding-bottom:30px">
       <div class="rv">
-        <div class="tl2-app" role="img" aria-label="The TraceLayer board: task cards in lanes, with the task's own chat open beside them">
-          <div class="tl2-app-bar"><div class="tl2-dots"><span></span><span></span><span></span></div><span class="tl2-wintitle">app.tracelayer.com — Billing · sprint board</span></div>
-          <div class="tl2-board-inner">
-            <div class="tl2-lanes">
-              <div class="tl2-lane">
-                <div class="tl2-lane-name"><span>In progress</span><span>2</span></div>
-                <div class="tl2-card sel"><b>Fix export date labels</b><span><i class="tl2-edot" style="background:#d97757"></i>Nadia · working — step 2 of 2</span></div>
-                <div class="tl2-card"><b>Refresh pricing page copy</b><span><i class="tl2-edot" style="background:#08bdba"></i>Planning worker · reading</span></div>
+        <span style="display:inline-flex;align-items:center;border-radius:8px;padding:1px;background:linear-gradient(135deg, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.08) 35%, rgba(255,255,255,0.04) 65%, rgba(255,255,255,0.3) 100%)">
+          <span style="padding:6px 9px 5px;border-radius:7px;background:rgba(0,0,0,.25);font-family:var(--ds-font-mono);font-size:12px;font-weight:500;color:rgba(255,255,255,.95);line-height:1;letter-spacing:.05em;text-transform:uppercase">What it does</span>
+        </span>
+      </div>
+      <div class="tl2-grid6 rv" style="margin-top:28px">
+        <div class="tl2-tile">
+          <svg class="ticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-8.5 8.5c-1.6 0-3.1-.4-4.4-1.2L3 21l1.7-5.1A8.5 8.5 0 1 1 21 12Z"></path></svg>
+          <b>Tasks are chats</b>
+          <p>Every task is a conversation — you, your team, and your agents in one thread.</p>
+        </div>
+        <div class="tl2-tile">
+          <svg class="ticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>
+          <b>Talk &amp; screenshare</b>
+          <p>Companion on your phone or desktop. Show your screen, say what you want — that becomes a task.</p>
+        </div>
+        <div class="tl2-tile">
+          <svg class="ticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5Z"></path><path d="m3 13 9 5 9-5"></path></svg>
+          <b>Durable memory</b>
+          <p>Your preferences and project facts stay current from one conversation to the next — and stay yours.</p>
+        </div>
+        <div class="tl2-tile">
+          <svg class="ticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"></rect><rect x="10" y="4" width="5" height="11" rx="1.5"></rect><rect x="17" y="4" width="4" height="8" rx="1.5"></rect></svg>
+          <b>An honest board</b>
+          <p>Draft, Needs you, In progress, Review, Complete. No card ever overstates where it really is.</p>
+        </div>
+        <div class="tl2-tile">
+          <svg class="ticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V4a2 2 0 0 1 4 0v3M15 7V4M6 7h12v4a6 6 0 0 1-12 0ZM12 17v4"></path></svg>
+          <b>100% maintained integrations</b>
+          <p>Platform agents watch every connection and repair it when it breaks.</p>
+          <div class="tl2-logorow">
+            <span class="tl2-lg" title="Slack"><svg viewBox="0 0 24 24"><rect x="10.7" y="3" width="2.6" height="7" rx="1.3" fill="#36C5F0"></rect><rect x="14" y="10.7" width="7" height="2.6" rx="1.3" fill="#2EB67D"></rect><rect x="10.7" y="14" width="2.6" height="7" rx="1.3" fill="#ECB22E"></rect><rect x="3" y="10.7" width="7" height="2.6" rx="1.3" fill="#E01E5A"></rect></svg></span>
+            <span class="tl2-lg" title="Gmail"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5.5" width="18" height="13" rx="1.8" stroke="rgba(255,255,255,.55)" stroke-width="1.5"></rect><path d="m4.5 7.5 7.5 6 7.5-6" stroke="#EA4335" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="tl2-lg" title="GitHub"><svg viewBox="0 0 24 24" fill="rgba(255,255,255,.75)"><path d="M12 3a8 8 0 0 0-2.5 15.6c.4.1.5-.2.5-.4v-1.4c-2 .4-2.5-.9-2.5-.9-.3-.9-.8-1.1-.8-1.1-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.3.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4a3 3 0 0 1 .8-2.1 2.8 2.8 0 0 1 .1-2.1s.7-.2 2.2.8a7.6 7.6 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.3.7.3 1.5.1 2.1a3 3 0 0 1 .8 2.1c0 3.1-1.8 3.8-3.6 4 .3.3.6.8.6 1.5v2.1c0 .2.1.5.5.4A8 8 0 0 0 12 3Z"></path></svg></span>
+            <span class="tl2-lg" title="Notion"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2.5" stroke="rgba(255,255,255,.55)" stroke-width="1.5"></rect><path d="M8.5 16V8.4l7 7.6V8" stroke="rgba(255,255,255,.8)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="tl2-lg" title="Google Drive"><svg viewBox="0 0 24 24"><path d="M9 3.5h6L9.6 14H3Z" fill="#1A73E8" opacity=".9"></path><path d="M15 3.5 21 14h-6.4L9 3.5Z" fill="#FBBC04" opacity=".9"></path><path d="M3.6 14h17l-3 5H6.6Z" fill="#188038" opacity=".9"></path></svg></span>
+            <span class="tl2-lg" title="Telegram"><svg viewBox="0 0 24 24" fill="#229ED9"><path d="M20.5 4.5 3.8 11c-.8.3-.8 1 0 1.3l4.2 1.4 1.6 4.9c.2.7.9.8 1.4.3l2.3-2.2 4.4 3.2c.6.4 1.3.1 1.5-.6l2.6-13.5c.2-.9-.5-1.5-1.3-1.3ZM9 13.5l8.5-5.8-6.8 6.6-.3 3Z"></path></svg></span>
+            <span class="tl2-lg" title="WhatsApp"><svg viewBox="0 0 24 24" fill="#25D366"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3Zm4.3 12.3c-.2.6-1.1 1.1-1.6 1.1-.4 0-.9.2-3.1-.7-2.6-1.1-4.2-3.8-4.4-4-.1-.2-1-1.4-1-2.7s.7-1.9.9-2.1c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4l.9 2.1c.1.2.1.4 0 .6l-.4.6c-.1.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3 0 .1 0 .5-.2 1Z" fill-rule="evenodd"></path></svg></span>
+            <span class="tl2-lg" title="Jira"><svg viewBox="0 0 24 24" fill="#2684FF"><path d="M12 3 6 9l6 6 6-6Z" opacity=".95"></path><path d="M9 14.5 12 12l3 2.5L12 21Z" opacity=".6"></path></svg></span>
+            <span class="tl2-lgmore">+ 40 more · all watched</span>
+          </div>
+        </div>
+        <div class="tl2-tile">
+          <svg class="ticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2.5-6 5 12 2.5-6h4"></path></svg>
+          <b>Always-on platform agents</b>
+          <p>Monitoring, fixing, and improving between your visits. The work does not wait for you to log in.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ds-container" id="models" style="padding-top:110px;padding-bottom:40px">
+      <div class="tl-show-grid" style="display:grid;grid-template-columns:44fr 56fr;gap:64px;width:100%">
+        <div style="display:flex;flex-direction:column">
+          <div id="tl-feat-0" class="tl-feat-block" style="display:flex;flex-direction:column;justify-content:center;gap:18px;min-height:52vh;padding:12vh 0;transition:opacity .5s;opacity:1">
+            <h2 class="ds-text-heading1" style="font-size:clamp(26px,2.8vw,34px);line-height:1.25;color:var(--ds-color-text-primary)">Not married to any model. Neither is your knowledge.</h2>
+            <p class="ds-text-body" style="color:var(--ds-color-text-description);line-height:1.75;max-width:480px">TraceLayer runs every major AI vendor, picking the right model for each step by cost and quality. Want to run a local model? Switch away from one you&rsquo;ve stopped trusting? No problem. And your knowledge stays your knowledge — it moves with you, never with the model.</p>
+          </div>
+          <div id="tl-feat-1" class="tl-feat-block" style="display:flex;flex-direction:column;justify-content:center;gap:18px;min-height:52vh;padding:12vh 0;transition:opacity .5s;opacity:0.3">
+            <h2 class="ds-text-heading1" style="font-size:clamp(26px,2.8vw,34px);line-height:1.25;color:var(--ds-color-text-primary)">Feels like magic. It isn&rsquo;t.</h2>
+            <p class="ds-text-body" style="color:var(--ds-color-text-description);line-height:1.75;max-width:480px">Underneath, the platform does the unglamorous work: durable knowledge that stays current as things change, dedicated agents watching performance and errors, every issue logged and fed back in. Results improve week after week — without anyone maintaining prompts.</p>
+          </div>
+        </div>
+        <div>
+          <div class="tl-sticky-panel" style="position:sticky;top:24vh">
+            <div style="display:grid;min-width:0;max-width:640px">
+              <div id="tl-panel-0" style="grid-column-start:1;grid-row-start:1;min-width:0;align-self:center;transition:opacity .5s;opacity:1;pointer-events:auto">
+                <div class="engwin" role="img" aria-label="TraceLayer picks a model per step from every major provider">
+                  <div class="engbar"><div class="tl2-dots"><span></span><span></span><span></span></div><span class="addr">engines · picked per step</span></div>
+                  <div class="englogos">
+                    <span class="lchip"><svg viewBox="0 0 24 24" fill="#D97757"><path d="M12 2.6 13.7 8.9 20 7.2 15.4 12 20 16.8 13.7 15.1 12 21.4 10.3 15.1 4 16.8 8.6 12 4 7.2 10.3 8.9Z"></path></svg>Claude</span>
+                    <span class="lchip"><svg viewBox="0 0 24 24" fill="none" stroke="#ECECEC" stroke-width="1.7"><circle cx="12" cy="12" r="7.4"></circle><path d="M12 4.6v4M12 15.4v4M4.6 12h4M15.4 12h4" stroke-linecap="round"></path></svg>GPT</span>
+                    <span class="lchip"><svg viewBox="0 0 24 24"><defs><linearGradient id="tlg-gem" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4285F4"></stop><stop offset="1" stop-color="#9B72F9"></stop></linearGradient></defs><path fill="url(#tlg-gem)" d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10Z"></path></svg>Gemini</span>
+                    <span class="lchip"><svg viewBox="0 0 27 23" fill="#4D6BFE"><path d="M26.5174 3.39471C26.235 3.2567 26.1137 3.52006 25.9487 3.65346C25.8923 3.69659 25.8446 3.75294 25.7969 3.80469C25.3846 4.24516 24.9027 4.53439 24.2737 4.49989C23.3536 4.44814 22.5682 4.73737 21.8735 5.44119C21.7258 4.57349 21.2353 4.0554 20.4889 3.72304C20.0985 3.55054 19.7034 3.37746 19.4297 3.00197C19.2388 2.73459 19.1865 2.43673 19.091 2.14289C19.0301 1.96579 18.9697 1.78466 18.7656 1.75418C18.5442 1.71968 18.4574 1.90541 18.3705 2.06067C18.0232 2.69549 17.8887 3.39471 17.9019 4.10313C17.9324 5.6965 18.6051 6.96556 19.9421 7.86834C20.0939 7.97184 20.133 8.07535 20.0852 8.22658C19.9938 8.53766 19.8857 8.83955 19.7903 9.15063C19.7293 9.34901 19.6384 9.39271 19.4257 9.30588C18.692 8.9994 18.0583 8.54571 17.4982 7.99772C16.5477 7.07827 15.6881 6.06336 14.6162 5.26869C14.3644 5.08296 14.1125 4.91045 13.8521 4.746C12.7584 3.68394 13.9952 2.81164 14.2816 2.70814C14.5812 2.60003 14.3857 2.22857 13.4179 2.23317C12.4502 2.2372 11.5646 2.56151 10.4359 2.99335C10.2708 3.05832 10.0972 3.10547 9.91951 3.14457C8.8954 2.95022 7.83162 2.90709 6.72069 3.03245C4.62877 3.26533 2.95777 4.25436 1.72954 5.94261C0.254043 7.97184 -0.0932678 10.2777 0.33167 12.6824C0.778458 15.2171 2.07225 17.3153 4.06008 18.9558C6.12152 20.6567 8.49577 21.4905 11.2047 21.3306C12.8498 21.2358 14.6812 21.0155 16.7473 19.2669C17.2682 19.5262 17.8151 19.6297 18.7219 19.7074C19.4205 19.7723 20.0933 19.6729 20.6143 19.5648C21.4302 19.3923 21.3739 18.6367 21.0789 18.4981C18.6874 17.3843 19.2124 17.8374 18.7351 17.4706C19.9501 16.033 21.8063 13.4776 22.379 9.99821C22.4353 9.61409 22.5072 9.073 22.4986 8.76192C22.494 8.57216 22.5377 8.49856 22.7545 8.47671C23.3536 8.40771 23.935 8.24383 24.4692 7.94999C26.0188 7.10357 26.6439 5.71318 26.7911 4.04678C26.8129 3.79204 26.7865 3.52869 26.5174 3.39471Z"></path></svg>DeepSeek</span>
+                    <span class="lchip"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="4.2" height="16" fill="#F7D046"></rect><rect x="9.9" y="4" width="4.2" height="10.5" fill="#F2A73B"></rect><rect x="16.8" y="4" width="4.2" height="16" fill="#EE792F"></rect><rect x="9.9" y="16" width="4.2" height="4" fill="#EB5829"></rect></svg>Mistral</span>
+                    <span class="lchip"><svg viewBox="0 0 24 24" fill="none" stroke="#0668E1" stroke-width="2.1" stroke-linecap="round"><path d="M3 16.5c0-5 2.2-9 4.6-9 3.4 0 5.4 9 8.8 9 2.4 0 4.6-4 4.6-9"></path></svg>Llama</span>
+                    <span class="lchip"><svg viewBox="0 0 24 24" fill="none" stroke="#23D18B" stroke-width="2.4" stroke-linecap="round"><path d="M6 3v18M6 12l10-9M6 12l10 9"></path></svg>Kimi</span>
+                    <span class="lchip"><svg viewBox="0 0 24 24" fill="none" stroke="#2DD4BF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.5"></rect><path d="m7 9.5 3 2.5-3 2.5M12.5 15H17"></path></svg>Local</span>
+                    <span class="lchip more">+ any OpenRouter model</span>
+                  </div>
+                  <div class="engsteps">
+                    <div class="engsteps-h"><span>step</span><span>picked</span><span>cost × quality</span></div>
+                    <div class="srow">
+                      <span class="sname"><i>1</i>Gather usage data</span>
+                      <span class="mpick"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10Z"></path></svg>Gemini Flash</span>
+                      <span class="meter"><span class="bars"><i class="on"></i><i></i><i></i></span>¢ · fast</span>
+                    </div>
+                    <div class="srow">
+                      <span class="sname"><i>2</i>Draft the fix</span>
+                      <span class="mpick"><svg viewBox="0 0 24 24" fill="#D97757"><path d="M12 2.6 13.7 8.9 20 7.2 15.4 12 20 16.8 13.7 15.1 12 21.4 10.3 15.1 4 16.8 8.6 12 4 7.2 10.3 8.9Z"></path></svg>Claude Sonnet</span>
+                      <span class="meter"><span class="bars"><i class="on"></i><i class="on"></i><i class="on"></i></span>best writer</span>
+                    </div>
+                    <div class="srow">
+                      <span class="sname"><i>3</i>Verify &amp; test</span>
+                      <span class="mpick"><svg viewBox="0 0 24 24" fill="none" stroke="#08bdba" stroke-width="1.8" stroke-linecap="round"><path d="m8 7-4 5 4 5M16 7l4 5-4 5"></path></svg>Codex</span>
+                      <span class="meter"><span class="bars"><i class="on"></i><i class="on"></i><i></i></span>strict checks</span>
+                    </div>
+                  </div>
+                  <div class="engfoot">$ switch any step, any time — your knowledge moves with you</div>
+                </div>
               </div>
-              <div class="tl2-lane">
-                <div class="tl2-lane-name"><span>Needs you</span><span>1</span></div>
-                <div class="tl2-card needs"><b>Choose the empty-state direction</b><span>one decision needed</span></div>
+              <div id="tl-panel-1" style="grid-column-start:1;grid-row-start:1;min-width:0;align-self:center;transition:opacity .5s;opacity:0;pointer-events:none">
+                <div class="roster" role="img" aria-label="The always-on platform agents and the last thing each one did">
+                  <div class="roster-h"><b>Platform agents</b><span class="rlive"><span class="rpulse"></span>always on</span></div>
+                  <div class="arow">
+                    <span class="atile at1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h13"></path><path d="M9 7h6"></path></svg></span>
+                    <span class="ainfo"><b>Librarian</b><span>Keeps project knowledge current as facts change.</span></span>
+                    <span class="alast">updated Pricing facts<b>2m ago</b></span>
+                  </div>
+                  <div class="arow">
+                    <span class="atile at2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2.5-6 5 12 2.5-6h4"></path></svg></span>
+                    <span class="ainfo"><b>Medic</b><span>Reruns exactly the step that failed — nothing else.</span></span>
+                    <span class="alast">repaired step 2 in Billing<b>18m ago</b></span>
+                  </div>
+                  <div class="arow">
+                    <span class="atile at3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.4 3 8.4 7 10 4-1.6 7-5.6 7-10V6Z"></path><path d="m9 12 2 2 4-4.5"></path></svg></span>
+                    <span class="ainfo"><b>Auditor</b><span>Keeps the board honest — no card overstates its state.</span></span>
+                    <span class="alast">verified 14 cards<b>1h ago</b></span>
+                  </div>
+                  <div class="arow">
+                    <span class="atile at4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 0-3.5 7.1L21 21l-1-3.6A8.9 8.9 0 0 0 21 12Z"></path><path d="M8.5 10.5h7M8.5 14h4.5"></path></svg></span>
+                    <span class="ainfo"><b>Concierge</b><span>Answers questions about any task — evidence attached.</span></span>
+                    <span class="alast">answered 3 questions<b>today</b></span>
+                  </div>
+                  <div class="arow">
+                    <span class="atile at5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 1 8-8"></path><path d="m12 12 4.5-4.5"></path><circle cx="12" cy="12" r="1.4" fill="currentColor"></circle></svg></span>
+                    <span class="ainfo"><b>Optimiser</b><span>Watches cost and quality, retunes model picks per step.</span></span>
+                    <span class="alast">moved step 3 to Flash<b>3h ago</b></span>
+                  </div>
+                  <div class="roster-f">Same rule as everyone here: <b>nothing is final until you approve it.</b></div>
+                </div>
               </div>
-              <div class="tl2-lane">
-                <div class="tl2-lane-name"><span>Review</span><span>1</span></div>
-                <div class="tl2-card"><b>Add account timeline</b><span style="color:#1d6b4f">checks passed · preview ready</span></div>
-              </div>
-            </div>
-            <div class="tl2-board-chat">
-              <h4>Fix export date labels <span class="tl2-loz">In progress</span></h4>
-              <div class="tl2-lmsg me">Dates are US format — should be DD/MM.</div>
-              <div class="tl2-lmsg"><span class="who">PM · Aria</span>Filed here in Billing. Nadia&rsquo;s on it — two steps.</div>
-              <div class="tl2-lact">Nadia · step 2 of 2 — format check passed</div>
-              <div class="tl2-lsys">Ready for review — preview attached.</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="ds-container" id="models">
-      <div class="tl2-split rv">
-        <div class="tl2-copy">
-          <h2 class="ds-text-heading1" style="color:var(--ds-color-text-primary);margin:0 0 20px">Not married to any model. Neither is your knowledge.</h2>
-          <p class="ds-text-body" style="color:var(--ds-color-text-description);line-height:1.75;max-width:520px">TraceLayer runs every major AI vendor, picking the right model for each step by cost and quality. Want to run a local model? Switch away from one you&rsquo;ve stopped trusting? No problem. And your knowledge stays your knowledge — it moves with you, never with the model.</p>
-        </div>
-        <div class="tl2-visual">
-          <div class="tl2-window" role="img" aria-label="TraceLayer picks a model per step: Claude, GPT, Gemini, DeepSeek, Kimi, or a local model">
-            <div class="tl2-winbar"><div class="tl2-dots"><span></span><span></span><span></span></div><span class="tl2-wintitle">engines · picked per step</span></div>
-            <div class="tl2-engines">
-              <span class="tl2-engine"><i style="background:#d97757"></i>Claude</span>
-              <span class="tl2-engine"><i style="background:#e8e8e8"></i>GPT</span>
-              <span class="tl2-engine"><i style="background:#4285F4"></i>Gemini</span>
-              <span class="tl2-engine"><i style="background:#4D6BFE"></i>DeepSeek</span>
-              <span class="tl2-engine"><i style="background:#23D18B"></i>Kimi</span>
-              <span class="tl2-engine"><i style="background:#9ff0e4"></i>Local model</span>
-            </div>
-            <div class="tl2-engines-note">$ step 3 · summarise findings → claude · cost × quality</div>
-          </div>
-        </div>
+    <section class="ds-container" style="padding-top:60px;padding-bottom:120px">
+      <div class="rv" style="display:flex;flex-direction:column;align-items:center;text-align:center">
+        <h2 class="ds-text-heading1" style="color:var(--ds-color-text-primary);max-width:820px">See it in action.</h2>
       </div>
-    </section>
-
-    <section class="ds-container">
-      <div class="tl2-split rev rv">
-        <div class="tl2-copy">
-          <h2 class="ds-text-heading1" style="color:var(--ds-color-text-primary);margin:0 0 20px">Feels like magic. It isn&rsquo;t.</h2>
-          <p class="ds-text-body" style="color:var(--ds-color-text-description);line-height:1.75;max-width:520px">Underneath, the platform does the unglamorous work: durable knowledge that stays current as things change, dedicated agents watching performance and errors, every issue logged and fed back in. Results improve week after week — without anyone maintaining prompts.</p>
-        </div>
-        <div class="tl2-visual">
-          <div class="tl2-app" role="img" aria-label="Project knowledge that a platform agent keeps up to date">
-            <div class="tl2-app-bar"><div class="tl2-dots"><span></span><span></span><span></span></div><span class="tl2-wintitle">Project knowledge</span></div>
-            <div class="tl2-doc">
-              <h4>Living knowledge <span class="tl2-loz">Current</span></h4>
-              <div class="tl2-doc-row">Business brief</div>
-              <div class="tl2-doc-row">Voice &amp; tone</div>
-              <div class="tl2-diff">
-                <span class="tag">Platform agent updated this</span>
-                <span class="del">Pricing: $29/mo, billed monthly</span>
-                <span class="add">Pricing: $39/mo, annual billing added</span>
-              </div>
-              <div class="tl2-doc-row">Working agreements</div>
-              <div class="tl2-doc-foot">performance watched · errors logged · 3 fixes fed back this week</div>
-            </div>
-          </div>
+      <div class="rv" style="margin-top:80px;border-radius:16px;border:1px solid var(--ds-color-border-default);background:var(--ds-color-bg-surface-3);overflow:hidden">
+        <div style="width:100%;aspect-ratio:16/9;position:relative;background:#0b0c0e;display:flex;align-items:center;justify-content:center">
+          <button class="tl-play-btn" type="button" aria-label="play" style="width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="rgba(255,255,255,.95)"><path d="M8 5.5v13l11-6.5z"></path></svg>
+          </button>
+          <span style="position:absolute;left:16px;bottom:12px;font-family:var(--ds-font-mono);font-size:12px;color:rgba(255,255,255,.35)">demo.mp4 — coming soon</span>
         </div>
       </div>
     </section>
@@ -335,7 +485,48 @@
   function readSy() {
     return (document.scrollingElement || document.documentElement).scrollTop || window.scrollY || 0;
   }
-  function onScroll() { headerBar.classList.toggle('is-scrolled', sy > 8); }
+  // scrolly-telling: text scrolls up, the sticky image swaps (same as the root page)
+  var FEATS = 2, featState = 0, featClicked = false, fcTimer = null;
+  function applyFeat() {
+    for (var i = 0; i < FEATS; i++) {
+      var block = document.getElementById('tl-feat-' + i);
+      var panel = document.getElementById('tl-panel-' + i);
+      if (!block || !panel) return;
+      var on = featState === i;
+      block.style.opacity = on ? '1' : '0.3';
+      panel.style.opacity = on ? '1' : '0';
+      panel.style.pointerEvents = on ? 'auto' : 'none';
+    }
+  }
+  function pickFeat(i) {
+    return function () {
+      featClicked = true;
+      clearTimeout(fcTimer);
+      fcTimer = setTimeout(function () { featClicked = false; }, 1200);
+      featState = i;
+      applyFeat();
+      var el = document.getElementById('tl-feat-' + i);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.3, behavior: reduced ? 'auto' : 'smooth' });
+    };
+  }
+  for (var fi = 0; fi < FEATS; fi++) {
+    var fb = document.getElementById('tl-feat-' + fi);
+    if (fb) fb.addEventListener('click', pickFeat(fi));
+  }
+  function onScroll() {
+    headerBar.classList.toggle('is-scrolled', sy > 8);
+    if (!featClicked) {
+      var mid = window.innerHeight * 0.45, best = featState, bestD = Infinity;
+      for (var i = 0; i < FEATS; i++) {
+        var el = document.getElementById('tl-feat-' + i);
+        if (!el) continue;
+        var r = el.getBoundingClientRect();
+        var d = Math.abs((r.top + r.bottom) / 2 - mid);
+        if (d < bestD) { bestD = d; best = i; }
+      }
+      if (best !== featState) { featState = best; applyFeat(); }
+    }
+  }
   document.addEventListener('scroll', function (e) {
     var t = e.target;
     sy = (t && t.nodeType === 1 && typeof t.scrollTop === 'number' && t.scrollTop > 0) ? t.scrollTop : readSy();
