@@ -338,7 +338,7 @@
     var left = w * 0.42, cy = h * 0.4;
     if (anchor && refEl) {
       var ar = anchor.getBoundingClientRect(), cr = refEl.getBoundingClientRect();
-      left = ar.left - cr.left + ar.width * 0.35;
+      left = ar.left - cr.left + ar.width * 0.82;
       cy = ar.top - cr.top + ar.height / 2;
     }
     var cx = left + 8 * s;
@@ -511,7 +511,7 @@
       var col = new THREE.Color();
       for (var i = 0; i < meta.length; i++) {
         var m = meta[i];
-        col.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 1.3);
+        col.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 0.65);
         mesh.setColorAt(i, col);
         dummy.position.set(m.x, m.y, m.z);
         dummy.scale.setScalar(m.sz);
@@ -576,7 +576,7 @@
         m.z += (gz - m.z) * 0.07;
         if (Math.abs(boost - m.boost) > 0.02) {
           m.boost = boost;
-          col2.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 1.3 * (1 + boost * 2.0));
+          col2.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 0.65 * (1 + boost * 2.0));
           mesh.setColorAt(i, col2);
           needColor = true;
         }
