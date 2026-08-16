@@ -48,7 +48,7 @@
     var ctx = canvas.getContext('2d');
     if (!ctx) return;
     var SP = 90, R = 140, LINE = 'rgba(94,180,170,', DOT = 'rgba(94,180,170,';
-    var LINE_A = 0.07, DOT_A = 0.16;
+    var LINE_A = 0.045, DOT_A = 0.13;
     var pts = [], cols = 0, rows = 0, w = 0, h = 0, raf = 0, resizeT = null;
     var mouse = { x: NaN, y: NaN }, asleep = false, visible = true;
     function layout() {
@@ -167,6 +167,7 @@
       'float noise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);f=f*f*(3.-2.*f);',
       ' return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}',
       'float fbm(vec2 p){float v=0.;float a=.5;mat2 r=mat2(.8,.6,-.6,.8);for(int i=0;i<3;i++){v+=a*noise(p);p=r*p*2.03;a*=.5;}return v;}',
+      'float ridge(vec2 q){float n=fbm(q);return 1.-abs(2.*n-1.);}',
       'float glow(vec2 uv,vec2 c,float r){float d=length(uv-c);return exp(-d*d/(r*r));}',
       'void main(){',
       ' vec2 uv=gl_FragCoord.xy/u_res;uv.x*=u_res.x/u_res.y;',
@@ -183,10 +184,15 @@
       ' col+=vec3(.37,.92,.83)*glow(p,c1,.22)*.26;',
       ' col+=vec3(.39,.40,.95)*glow(p,c2,.25)*.22;',
       ' col+=vec3(.18,.83,.75)*glow(p,c3,.32)*.15;',
-      ' col+=col*fbm(p*3.5+t*1.7)*.35;',
-      ' float contain=exp(-dot(uv-base,uv-base)/.34);',
+      ' float wv=pow(smoothstep(.30,1.,ridge(p*vec2(.9,1.35)+lean*.5+vec2(t*.24,-t*.16))),2.4);',
+      ' float wv2=pow(smoothstep(.42,1.,ridge(p*vec2(.55,.8)-vec2(t*.13,t*.09)+3.7)),2.8);',
+      ' col*= .62+.75*wv;',
+      ' float wide=exp(-dot(uv-base,uv-base)/.85);',
+      ' col+=vec3(.26,.66,.66)*wv*.16*wide;',
+      ' col+=vec3(.30,.42,.72)*wv2*.13*wide;',
+      ' float contain=exp(-dot(uv-base,uv-base)/.42);',
       ' col*=contain;',
-      ' col+=(hash(gl_FragCoord.xy+fract(u_t)*7.)-.5)*.014;',
+      ' col+=(hash(gl_FragCoord.xy+fract(u_t)*7.)-.5)*.02;',
       ' col=max(col,0.);',
       ' float a=clamp(max(max(col.r,col.g),col.b),0.,1.);',
       ' gl_FragColor=vec4(col,a);',
@@ -311,7 +317,7 @@
     var canvas = document.getElementById('tl-logo-pixels');
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
-    var pts = [], w = 0, h = 0, jolt = 0, lastSy = null;
+    var pts = [], w = 0, h = 0, jolt = 0, lastSy = null, firstBuild = true;
     var mouse = { x: NaN, y: NaN };
     function build() {
       w = canvas.clientWidth; h = canvas.clientHeight;
@@ -319,7 +325,17 @@
       canvas.width = w * DPR; canvas.height = h * DPR;
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
       pts = samplePoints(w, h, canvas).pts;
-      if (TEST) pts.forEach(function (p) { p.x = p.tx; p.y = p.ty; });
+      pts.forEach(function (p) {
+        if (firstBuild) {
+          p.x = p.tx + (p.x - p.tx) * 0.5;
+          p.y = p.ty + (p.y - p.ty) * 0.5;
+        } else {
+          p.x = p.tx + (Math.random() - 0.5) * 80;
+          p.y = p.ty + (Math.random() - 0.5) * 60;
+        }
+        if (TEST) { p.x = p.tx; p.y = p.ty; }
+      });
+      firstBuild = false;
     }
     build();
     new ResizeObserver(build).observe(canvas);
@@ -386,7 +402,7 @@
     var camera = new THREE.OrthographicCamera(0, 2, 0, 2, -2000, 2000);
     var group = new THREE.Group();
     scene.add(group);
-    var mesh = null, meta = [], glyphCx = 0, glyphCy = 0;
+    var mesh = null, meta = [], glyphCx = 0, glyphCy = 0, firstBuild = true;
     var dummy = new THREE.Object3D();
     var SLATE = new THREE.Color(0.627, 0.690, 0.682);
     var TEAL = new THREE.Color(0.369, 0.918, 0.831);
@@ -402,14 +418,20 @@
       meta = sample.pts.map(function (p) {
         var m = {
           tx: p.tx, ty: p.ty, tz: (Math.random() - 0.5) * 16,
-          x: p.tx + (p.x - p.tx) * 0.55, y: p.ty + (p.y - p.ty) * 0.55,
-          z: (Math.random() - 0.5) * 240,
+          x: p.tx + (p.x - p.tx) * 0.28, y: p.ty + (p.y - p.ty) * 0.28,
+          z: (Math.random() - 0.5) * 120,
           sz: p.sz * 1.05, a: p.a, dx: p.dx, dy: p.dy, ph: p.ph,
           accent: p.accent, boost: 0
         };
+        if (!firstBuild) {
+          m.x = m.tx + (Math.random() - 0.5) * 80;
+          m.y = m.ty + (Math.random() - 0.5) * 60;
+          m.z = m.tz + (Math.random() - 0.5) * 30;
+        }
         if (TEST) { m.x = m.tx; m.y = m.ty; m.z = m.tz; }
         return m;
       });
+      firstBuild = false;
       if (mesh) { group.remove(mesh); mesh.geometry.dispose(); mesh.material.dispose(); }
       var geo = new THREE.BoxGeometry(1, 1, 1);
       var mat = new THREE.MeshBasicMaterial({ transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
