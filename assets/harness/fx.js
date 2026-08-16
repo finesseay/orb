@@ -61,8 +61,8 @@
       distortBoost: 0.45, swirlBoost: 0.15,
       glowIntensity: 0, glowColors: ['#f4fff9', '#2dd4bf', '#4640c4'],
       speed: 28, scale: 1.77, offsetX: -124, offsetY: -48, grain: 0.005,
-      colors: ['#10182b', '#3f46b0', '#12716a', '#f0fbf7', '#101725'],
-      lightX: 0.89, lightY: 0.46, lightCore: 0.14, lightHalo: 0.2, vignette: 0.30, lightFollow: 0.63,
+      colors: ['#070b12', '#232a72', '#175d5c', '#d6ebe0', '#070b12'],
+      lightX: 0.89, lightY: 0.46, lightCore: 0.14, lightHalo: 0.2, vignette: 0.38, lightFollow: 0.63,
       bloomThreshold: 0.61, bloomRange: 0.18, bloomStrength: 0.4
     };
 
@@ -511,7 +511,7 @@
       var col = new THREE.Color();
       for (var i = 0; i < meta.length; i++) {
         var m = meta[i];
-        col.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 2.4);
+        col.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 1.3);
         mesh.setColorAt(i, col);
         dummy.position.set(m.x, m.y, m.z);
         dummy.scale.setScalar(m.sz);
@@ -576,7 +576,7 @@
         m.z += (gz - m.z) * 0.07;
         if (Math.abs(boost - m.boost) > 0.02) {
           m.boost = boost;
-          col2.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 2.4 * (1 + boost * 1.4));
+          col2.copy(m.accent ? TEAL : SLATE).multiplyScalar(m.a * 1.3 * (1 + boost * 2.0));
           mesh.setColorAt(i, col2);
           needColor = true;
         }
