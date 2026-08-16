@@ -57,8 +57,8 @@
     host.insertBefore(canvas, host.firstChild);
 
     var P = {
-      mouseRadius: 0.09, mouseStrength: 1.8, mouseSmoothing: 0.1, mouseVelocity: 0.2, decay: 0.925,
-      distortBoost: 1.0, swirlBoost: 0.4,
+      mouseRadius: 0.09, mouseStrength: 0.5, mouseSmoothing: 0.1, mouseVelocity: 0.2, decay: 0.925,
+      distortBoost: 0.45, swirlBoost: 0.15,
       glowIntensity: 0, glowColors: ['#f4fff9', '#2dd4bf', '#4640c4'],
       speed: 28, scale: 1.77, offsetX: -124, offsetY: -48, grain: 0.005,
       colors: ['#10182b', '#3f46b0', '#12716a', '#f0fbf7', '#101725'],
